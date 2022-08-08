@@ -1,5 +1,6 @@
 //Hashing Password
-const bcrypt = require('bcryptjs');
+
+import bcrypt from 'bcryptjs';
 
 export const hashPassword = async (userPassword) => {
     const convertedUserPassword = userPassword.toString();

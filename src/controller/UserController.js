@@ -1,7 +1,8 @@
 import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser} from '../models/user'
 import { hashPassword } from '../utility/util';
 import TokenController from './TokenController';
-const bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
+
 
 
 

@@ -1,4 +1,4 @@
-import { object } from 'joi'
+
 import {pool } from '../index'
 
 export const findItemByName = async (name) => {

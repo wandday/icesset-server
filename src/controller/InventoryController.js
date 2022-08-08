@@ -1,4 +1,4 @@
-import {findItemByName, findItemById, findAllItem, createInventory, updateInventory, deleteInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem} from '../models/inventory'
+import { findItemById, findAllItem, createInventory, updateInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem} from '../models/inventory'
 
 
 export default class InventoryController {

@@ -1,8 +1,8 @@
 // User Validation
 
-const Joi = require ('joi');
-const { joiPassword } = require('joi-password');
-const bcrypt = require('bcryptjs');
+ import Joi from 'joi';
+import  joiPassword  from 'joi-password';
+import  bcrypt  from 'bcryptjs';
 
 export const validUser = {
     body: Joi.object({
@@ -12,13 +12,13 @@ export const validUser = {
     role: Joi.string().min(3).required(),
     mobilePhone: Joi.number().min(11).required(),
   
-      password: joiPassword.string()
-      .minOfSpecialCharacters(1)
-      .minOfLowercase(1)
-      .minOfUppercase(1)
-      .minOfNumeric(1)
-      .noWhiteSpaces()
-      .required(),
+      // password: joiPassword.string()
+      // .minOfSpecialCharacters(1)
+      // .minOfLowercase(1)
+      // .minOfUppercase(1)
+      // .minOfNumeric(1)
+      // .noWhiteSpaces()
+      // .required(),
     }),
 };
 

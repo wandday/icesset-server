@@ -2,11 +2,12 @@
   "name": "icesset_server",
   "version": "1.0.0",
   "description": "icesset asset manager server",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --out-dir build",
     "startdev": "nodemon --exec babel-node ./build/index",
-    "start": "node ./build/index"
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/index.js"
   },
   "author": "Olawande",
   "license": "ISC",

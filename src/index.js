@@ -1,15 +1,16 @@
-const express = require ('express');
+import express from 'express';
 const app = express();
 app.use(express.json());
-const bcrypt = require('bcryptjs');
+
 app.use(express.json());
 
 
-const cors = require('cors')
+import cors from 'cors';
+
 app.use(cors())
 
-const mysql = require('mysql2/promise')
-const dotenv = require('dotenv');
+import mysql from 'mysql2'
+import  dotenv from 'dotenv'
 import { ValidationError } from "express-validation";
 dotenv.config();
 import UserRouter from "./api/UserRouter";

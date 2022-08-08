@@ -27,9 +27,10 @@ var hashPassword = /*#__PURE__*/function () {
 
           case 3:
             harshPassword = _context.sent;
+            console.log(convertedUserPassword);
             return _context.abrupt("return", harshPassword);
 
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }

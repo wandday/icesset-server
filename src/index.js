@@ -9,7 +9,7 @@ import cors from 'cors';
 
 app.use(cors())
 
-import mysql from 'mysql2'
+import mysql from 'mysql2/promise'
 import  dotenv from 'dotenv'
 import { ValidationError } from "express-validation";
 dotenv.config();

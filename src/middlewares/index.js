@@ -15,10 +15,9 @@ export const hasRole = (role, request, response, next) => {
                     console.log("role is", role);
 
                     if (user.role == role) {
-                        request.body.user = user;
-                        if (request.body.user.email)
-                        request.body.email = request.body.user.email;
-                        console.log(user);
+                        request.user = user;
+                        if (request.user.email)
+                        //console.log(user);
                         next();
                     } else{
                         const err = new Error("Access Denied");

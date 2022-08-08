@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 
 export default class UserController {
     async createUser(user){
+        console.log(user)
        const result =  await findUserByEmail(user.email)
        if (result[0].length > 0){
         const err = new Error(`User with ${user.email} already exist.`);

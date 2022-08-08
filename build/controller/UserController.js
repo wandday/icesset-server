@@ -38,14 +38,15 @@ var UserController = /*#__PURE__*/function () {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log(user);
+                _context.next = 3;
                 return (0, _user.findUserByEmail)(user.email);
 
-              case 2:
+              case 3:
                 result = _context.sent;
 
                 if (!(result[0].length > 0)) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
@@ -53,20 +54,20 @@ var UserController = /*#__PURE__*/function () {
                 err.status = 400;
                 throw err;
 
-              case 9:
-                _context.next = 11;
+              case 10:
+                _context.next = 12;
                 return (0, _util.hashPassword)(user.password);
 
-              case 11:
+              case 12:
                 user.password = _context.sent;
-                _context.next = 14;
+                _context.next = 15;
                 return (0, _user.createUser)(user);
 
-              case 14:
+              case 15:
                 _result = _context.sent;
 
                 if (!_result) {
-                  _context.next = 19;
+                  _context.next = 20;
                   break;
                 }
 
@@ -74,12 +75,12 @@ var UserController = /*#__PURE__*/function () {
                   message: "User created successfully."
                 });
 
-              case 19:
+              case 20:
                 _err = new Error("Unable to create user.");
                 _err.status = 400;
                 throw _err;
 
-              case 22:
+              case 23:
               case "end":
                 return _context.stop();
             }

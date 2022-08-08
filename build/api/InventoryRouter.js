@@ -25,10 +25,7 @@ var _config = require("../config/config");
 
 var router = (0, _express.Router)();
 var inventoryController = new _InventoryController["default"]();
-router.post("/locations", (0, _expressValidation.validate)(_validation.validlocation),
-/*#__PURE__*/
-// hasRole(admin),
-function () {
+router.post("/locations", (0, _expressValidation.validate)(_validation.validlocation), (0, _index.hasRole)(_config.admin), /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var result;
     return _regenerator["default"].wrap(function _callee$(_context) {

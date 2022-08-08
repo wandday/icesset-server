@@ -16,7 +16,7 @@ router.post(
   "/locations",
   
   validate(validlocation),
-  // hasRole(admin),
+  hasRole(admin),
   async (req, res, next) => {
     try {
       const result = await inventoryController.createLocation(req.body);

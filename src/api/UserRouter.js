@@ -13,7 +13,7 @@ const userController = new UserController()
 router.post(
     "/users",
     validate(validUser),
-    // hasRole(admin),
+    hasRole(admin),
     async (req, res, next) => {
       try {
         const result = await userController.createUser(req.body);

@@ -25,10 +25,7 @@ var _UserController = _interopRequireDefault(require("../controller/UserControll
 
 var router = (0, _express.Router)();
 var userController = new _UserController["default"]();
-router.post("/users", (0, _expressValidation.validate)(_validation.validUser),
-/*#__PURE__*/
-// hasRole(admin),
-function () {
+router.post("/users", (0, _expressValidation.validate)(_validation.validUser), (0, _index.hasRole)(_config.admin), /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var result;
     return _regenerator["default"].wrap(function _callee$(_context) {

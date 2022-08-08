@@ -25,10 +25,9 @@ var hasRole = function hasRole(role, request, response, next) {
           console.log("role is", role);
 
           if (user.role == role) {
-            request.body.user = user;
-            if (request.body.user.email) request.body.email = request.body.user.email;
-            console.log(user);
-            next();
+            request.user = user;
+            if (request.user.email) //console.log(user);
+              next();
           } else {
             var err = new Error("Access Denied");
             err.status = 403;

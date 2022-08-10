@@ -1,7 +1,7 @@
 // User Validation
 
- import Joi from 'joi';
-import  joiPassword  from 'joi-password';
+import Joi from 'joi';
+// import  joiPassword  from 'joi-password';
 import  bcrypt  from 'bcryptjs';
 
 export const validUser = {
@@ -11,6 +11,7 @@ export const validUser = {
     email: Joi.string().email().min(3).required(),
     role: Joi.string().min(3).required(),
     mobilePhone: Joi.number().min(11).required(),
+    password: Joi.string().min(6).required()
   
       // password: joiPassword.string()
       // .minOfSpecialCharacters(1)

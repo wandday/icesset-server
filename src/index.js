@@ -15,11 +15,12 @@ import { ValidationError } from "express-validation";
 dotenv.config();
 import UserRouter from "./api/UserRouter";
 import InventoryRouter from "./api/InventoryRouter";
+import TransactionRouter from "./api/TransactionRouter";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1", UserRouter, InventoryRouter);
+app.use("/api/v1", UserRouter, InventoryRouter, TransactionRouter);
 
 app.use((err, request, response, next) => {
   if (err instanceof ValidationError) {

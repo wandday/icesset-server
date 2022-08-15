@@ -30,7 +30,10 @@ export const validInventory = {
   category: Joi.string().min(3).required(),
   description: Joi.string().min(3),
   locations: Joi.array().items({store_id: Joi.number().min(1).required(),
-              quantity: Joi.number().min(2).required()})
+    store_name: Joi.string().min(3).required(),
+    quantity: Joi.number().min(2).required(),
+    user_id: Joi.number().min(1).required(),
+    user_name: Joi.string().min(3).required()})
   }),
 };
 

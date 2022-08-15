@@ -60,8 +60,7 @@ export const createInventory = async (item) => {
    console.log(locations)
    locations.forEach(el  => {
       //console.log(e)
-       pool.query('INSERT into quantity_location SET item_id=?, store_id=?, quantity=?', [lastIndex, 
-         el.store_id, el.quantity])
+       pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [lastIndex, el.store_id, el.store_name, el.quantity, el.user_id, el.user_name])
    });
    
    return item;

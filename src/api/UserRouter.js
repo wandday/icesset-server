@@ -73,7 +73,7 @@ router.post(
 router.put(
   "/users/:id",
   validate(validUser),
-  // hasRole(admin),
+  hasRole(admin),
   async (req, res, next) => {
     try {
       const result = await userController.updateUser(req.params.id, req.body);

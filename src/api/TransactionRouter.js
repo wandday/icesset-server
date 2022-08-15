@@ -18,5 +18,35 @@ router.post(
     }
   );
 
+  
+  router.get(
+    "/transactions/all",
+    async (req, res, next) => {
+      try {
+        const result = await transactionController.getAllTransactions();
+        res
+          .status(200)
+          .json({ message: "transaction record retrieved successfully", data: result });
+      } catch (e) {
+        next(e);
+      }
+    }
+  );
+
+  // router.get(
+  //   "/users/transaction/:id",
+  //   async (req, res, next) => {
+  //     try {
+  //       const result = await transactionController.getTransactions(req.params.id);
+  //       res
+  //         .status(200)
+  //         .json({ message: "transaction record retrieved successfully", data: result });
+  //     } catch (e) {
+  //       next(e);
+  //     }
+  //   }
+  // );
+
+
 
   export default router;

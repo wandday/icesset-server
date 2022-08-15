@@ -24,5 +24,9 @@ export const createTransaction = async (trans) => {
    
    
    return trans;
-
 }
+
+
+export const getAllTransactions = async () => {
+    return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
+ }

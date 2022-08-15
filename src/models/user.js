@@ -20,8 +20,8 @@ export const createUser = async (user) => {
 
 export const updateUser = async (userId, update) => {
    //  console.log(user)
-    const {firstName, lastName, mobilePhone, email, password, role,} = update
-    return await pool.query('UPDATE users SET firstName=?, lastName=?, mobilePhone=?, email=?, password=?, role=?,  userStatus=? where user_id=?',  [firstName, lastName, mobilePhone, email, password, role, 'active', userId])
+    const {firstName, lastName, mobilePhone, email, role,} = update
+    return await pool.query('UPDATE users SET firstName=?, lastName=?, mobilePhone=?, email=?, role=?,  userStatus=? where user_id=?',  [firstName, lastName, mobilePhone, email, role, 'active', userId])
  }
 
 

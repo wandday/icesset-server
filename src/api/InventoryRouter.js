@@ -74,6 +74,21 @@ router.get(
 );
 
 
+router.get(
+  "/items/users/:id",
+  async (req, res, next) => {
+    try {
+      const result = await inventoryController.getItemsWithPerson(req.params.id);
+      res
+        .status(200)
+        .json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+
 router.post(
   "/inventory",
   

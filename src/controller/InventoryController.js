@@ -1,4 +1,4 @@
-import { findItemById, findAllItem, createInventory, updateInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem} from '../models/inventory'
+import { findItemById, findAllItem, createInventory, updateInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson} from '../models/inventory'
 
 
 export default class InventoryController {
@@ -49,6 +49,17 @@ export default class InventoryController {
         const result = await getItemsInLocation(storeId)
         if (result[0].length < 1){
             const err = new Error(`The store with ID ${storeId}  does not exist`);
+            err.status = 400;
+            throw err;
+        }
+        else return result[0]
+    }
+
+
+    async getItemsWithPerson(userId){
+        const result = await getItemsWithPerson(userId)
+        if (result[0].length < 1){
+            const err = new Error(`The user with ID ${userId}  does not exist`);
             err.status = 400;
             throw err;
         }

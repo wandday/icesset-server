@@ -27,6 +27,11 @@ export const getItemsInLocation = async (storeId) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where quantity_location.store_id=?', [storeId])
 }
 
+
+export const getItemsWithPerson = async (userId) => {
+   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where quantity_location.user_id=?', [userId])
+}
+
 export const findAllItem = async () => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ')
 }

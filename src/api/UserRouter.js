@@ -91,7 +91,7 @@ router.put(
 router.put(
   "/users/suspend/:id",
   // validate(validUser),
-  // hasRole(admin),
+  hasRole(admin),
   async (req, res, next) => {
     try {
       const result = await userController.suspendUser(req.params.id, req.body);

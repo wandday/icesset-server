@@ -21,6 +21,8 @@ export const createTransaction = async (trans) => {
             el.item_id, el.quantity])
     });
 
+
+
    
    
    return trans;
@@ -29,4 +31,10 @@ export const createTransaction = async (trans) => {
 
 export const getAllTransactions = async () => {
     return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
+ }
+
+
+ export const collectTransfer = async (collect) => {
+    const {item_name, category, description, locations} = item
+    return await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [keyWord])
  }

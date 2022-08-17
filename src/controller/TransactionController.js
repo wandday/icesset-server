@@ -27,6 +27,21 @@ export default class TransactionController {
         else return result[0]
     }
 
+
+    async collectTransfer(collect){
+        const result = await collectTransfer(collect)
+        if(result) {
+            // console.log(result);
+            return {
+                message: "Items sucessfully collected."
+            }
+        }else {
+            const err = new Error("Unable to collect item.");
+            err.status = 400;
+            throw err;
+        } 
+    }
+
     // async getTransactions(userId){
     //     const result = await getAllTransactions(userId)
     //     if (!result){

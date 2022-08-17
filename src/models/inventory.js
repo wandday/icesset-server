@@ -57,8 +57,8 @@ export const findItem = async (keyWord) => {
 
 export const createInventory = async (item) => {
    console.log(item)
-   const {item_name, category, description, locations} = item
-   await pool.query('INSERT into items SET item_name=?, category=?, description=?',  [item_name, category, description]);
+   const {item_name, category, description, supplier, supplierContact, locations} = item
+   await pool.query('INSERT into items SET item_name=?, category=?, description=?, supplier=?, supplierContact=?',  [item_name, category, description, supplier, supplierContact]);
 
    let result = await pool.query('SELECT LAST_INSERT_ID()');
    let lastIndex =  result[0][0][`LAST_INSERT_ID()`]

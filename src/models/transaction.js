@@ -21,8 +21,6 @@ export const createTransaction = async (trans) => {
             el.item_id, el.quantity])
     });
 
-
-
    
    
    return trans;
@@ -34,7 +32,7 @@ export const getAllTransactions = async () => {
  }
 
 
- export const collectTransfer = async (collect) => {
-    const {item_name, category, description, locations} = item
-    return await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [keyWord])
- }
+//  export const collectTransfer = async (collect) => {
+//     const {item_name, category, description, locations} = item
+//     return await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [keyWord])
+//  }

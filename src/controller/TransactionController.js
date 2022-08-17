@@ -24,7 +24,25 @@ export default class TransactionController {
             err.status = 400;
             throw err;
         }
-        else return result[0]
+        else {
+            const response = [...new Map(result[0].map(item =>
+                [item['transaction_id'], item])).values()]
+                response.forEach(e => {
+                    e.data = []
+                   result[0].forEach(d => {
+                       if(e.transaction_id == d.transaction_id) {
+                         e.data.push({
+                           item_id: d.item_id,
+                           quantity: d.quantity
+                         })
+                       }
+                   })
+                   e.item_id = undefined
+                   e.quantity = undefined
+                  })
+                return response
+        } 
+        
     }
 
 

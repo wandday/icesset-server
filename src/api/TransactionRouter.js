@@ -34,6 +34,21 @@ router.post(
   );
 
 
+  router.get(
+    "/transactions/user/:id",
+    async (req, res, next) => {
+      try {
+        const result = await transactionController.getOwnTransactions(req.params.id);
+        res
+          .status(200)
+          .json({ message: "transaction record retrieved successfully", data: result });
+      } catch (e) {
+        next(e);
+      }
+    }
+  );
+
+
   router.post(
     "/collect",
     async (req, res, next) => {

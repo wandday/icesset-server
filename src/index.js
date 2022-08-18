@@ -21,7 +21,12 @@ import EmailRouter from "./api/EmailRouter";
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1", UserRouter, InventoryRouter, TransactionRouter, EmailRouter);
+app.use("/api/v1", 
+UserRouter, 
+InventoryRouter, 
+TransactionRouter, 
+EmailRouter
+);
 
 app.use((err, request, response, next) => {
   if (err instanceof ValidationError) {

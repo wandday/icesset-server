@@ -27,9 +27,19 @@ export const createTransaction = async (trans) => {
 }
 
 
-export const getAllTransactions = async () => {
-    return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
- }
+// export const getAllTransactions = async () => {
+//     return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
+//  }
+
+
+ export const getAllTransactions = async () => {
+    return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN items on items.item_id = transaction_item.item_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
+ } 
+
+
+ export const getOwnTransactions = async (userId) => {
+    return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN items on items.item_id = transaction_item.item_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id where transactions.created_by_id=? OR waybill.sent_to_id=?', [userId, userId])
+ } 
 
 
 //  export const collectTransfer = async (collect) => {

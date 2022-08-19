@@ -147,8 +147,10 @@ export default class InventoryController {
                          })
                        }
                    })
+                   e.store_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.user_id = undefined
                    e.user_name = undefined
                   })
                 return response

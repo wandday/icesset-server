@@ -138,9 +138,12 @@ export default class InventoryController {
                    result[0].forEach(d => {
                        if(e.item_id == d.item_id) {
                          e.data.push({
+                            store_id: d.store_id,
                             store_name: d.store_name,
-                           quantity: d.quantity,
-                           user_name: d.user_name
+                            quantity: d.quantity,
+                            user_id: d.user_id,
+                            user_name: d.user_name
+                           
                          })
                        }
                    })

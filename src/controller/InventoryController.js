@@ -113,6 +113,16 @@ export default class InventoryController {
         else return result[0]
     }
 
+    // async getInventory(itemId){
+    //     const result = await findItemById(itemId)
+    //     if (result[0].length < 1){
+    //         const err = new Error(`Could not retrive item with ID  ${itemId}`);
+    //         err.status = 400;
+    //         throw err;
+    //     }
+    //     else return result[0]
+    // }
+
     async getInventory(itemId){
         const result = await findItemById(itemId)
         if (result[0].length < 1){
@@ -120,8 +130,29 @@ export default class InventoryController {
             err.status = 400;
             throw err;
         }
-        else return result[0]
+        else {
+            const response = [...new Map(result[0].map(item =>
+                [item['item_id'], item])).values()]
+                response.forEach(e => {
+                    e.data = []
+                   result[0].forEach(d => {
+                       if(e.item_id == d.item_id) {
+                         e.data.push({
+                            store_name: d.store_name,
+                           quantity: d.quantity,
+                           user_name: d.user_name
+                         })
+                       }
+                   })
+                   e.store_name = undefined
+                   e.quantity = undefined
+                   e.user_name = undefined
+                  })
+                return response
+        } 
     }
+
+
 
 
     async updateInventory(itemId, update){

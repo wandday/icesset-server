@@ -38,6 +38,9 @@ export const findAllItem = async () => {
 
 export const findItem = async (keyWord) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where items.item_name=?', [keyWord])
+
+
+   
 }
 
 

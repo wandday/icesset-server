@@ -17,6 +17,7 @@ import UserRouter from "./api/UserRouter";
 import InventoryRouter from "./api/InventoryRouter";
 import TransactionRouter from "./api/TransactionRouter";
 import EmailRouter from "./api/EmailRouter";
+import PasswordResetRouter from "./api/PasswordResetRouter";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,7 +26,8 @@ app.use("/api/v1",
 UserRouter, 
 InventoryRouter, 
 TransactionRouter, 
-EmailRouter
+EmailRouter,
+PasswordResetRouter
 );
 
 app.use((err, request, response, next) => {

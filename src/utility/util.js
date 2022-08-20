@@ -8,3 +8,10 @@ export const hashPassword = async (userPassword) => {
     console.log(convertedUserPassword)
     return harshPassword;
   };
+
+
+  export const hashResetString = async (resetString) => {
+    const convertedResetString = resetString.toString();
+    const hashResetString = await bcrypt.hash(convertedResetString, 10);
+    return hashResetString;
+  };

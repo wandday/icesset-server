@@ -81,16 +81,16 @@ export const createInventory = async (item) => {
 //  }
 
 
- export const updateInventory = async (itemId, update) => {
-   const {item_name, category, description, locations} = update
-   await pool.query('UPDATE items SET item_name=?, category=?, description=? where item_id=?',  [item_name, category, description, itemId]);
+//  export const updateInventory = async (itemId, update) => {
+//    const {item_name, category, description, locations} = update
+//    await pool.query('UPDATE items SET item_name=?, category=?, description=? where item_id=?',  [item_name, category, description, itemId]);
 
-   locations.forEach(el  => {
-       pool.query('UPDATE quantity_location SET store_id=?, quantity=? where item_id=?', [el.store_id, el.quantity, itemId])
-   });
+//    locations.forEach(el  => {
+//        pool.query('UPDATE quantity_location SET store_id=?, quantity=? where item_id=?', [el.store_id, el.quantity, itemId])
+//    });
    
-   return update;
-}
+//    return update;
+// }
 
 
  export const createLocation = async (location) => {

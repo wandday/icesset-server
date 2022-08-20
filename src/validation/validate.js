@@ -61,6 +61,16 @@ export const validlocation = {
   }),
 };
 
+
+export const validPassword = {
+  body: Joi.object({
+  user_id: Joi.number().min(1).required(),
+  resetString: Joi.string().min(1).required(),
+  newPassword: Joi.string().min(6).required(),
+
+  }),
+};
+
 // Compare password
 export const matchPassword = async (enteredPassword, existingHashedPassword ) => {
   return await bcrypt.compare(enteredPassword, existingHashedPassword)

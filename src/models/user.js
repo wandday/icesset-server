@@ -30,3 +30,9 @@ export const updateUser = async (userId, update) => {
     return await pool.query('UPDATE users SET userStatus=? where user_id=?',  [ 'suspended', userId])
  }
 
+
+ export const unsuspendUser = async (userId) => {
+   //  console.log(user)
+    return await pool.query('UPDATE users SET userStatus=? where user_id=?',  [ 'active', userId])
+ }
+

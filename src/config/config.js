@@ -7,6 +7,7 @@ export const TOKEN_SECRET =
 
 
   export const admin = "admin";
+  export const active = "active";
 
 
   export const transporter_pro = nodemailer.createTransport({

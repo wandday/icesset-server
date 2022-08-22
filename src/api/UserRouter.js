@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { validate } from "express-validation";
 import { validUser } from "../validation";
-import { hasRole } from "../middlewares/index";
-import { admin } from '../config/config';
+import { hasRole, isUser } from "../middlewares/index";
+import { admin, active } from '../config/config';
 import UserController from "../controller/UserController";
 
 
@@ -57,6 +57,7 @@ router.get(
 
 router.post(
   "/users/login",
+  // isUser(active),
   async (req, res, next) => {
     try {
       const result = await userController.logUserIn(req.body);
@@ -88,7 +89,7 @@ router.put(
 
 
 
-router.put(
+router.patch(
   "/users/suspend/:id",
   // validate(validUser),
   hasRole(admin),
@@ -98,6 +99,23 @@ router.put(
       res
         .status(200)
         .json({ message: "User suspended successfully"});
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+
+router.patch(
+  "/users/unsuspend/:id",
+  // validate(validUser),
+  hasRole(admin),
+  async (req, res, next) => {
+    try {
+      const result = await userController.unsuspendUser(req.params.id, req.body);
+      res
+        .status(200)
+        .json({ message: "User's access has been restored successfully"});
     } catch (e) {
       next(e);
     }

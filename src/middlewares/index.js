@@ -46,3 +46,22 @@ export const hasRole = (role, request, response, next) => {
         }
     };
 };
+
+
+
+
+
+export const isUser = (userStatus, request, response, next) => {
+    return(request, response, next) => {
+            if (user.info.userStatus == userStatus) {
+                request.user = user;
+                //console.log(user);
+                next();
+            } else{
+                const err = new Error("Access Denied");
+                err.status = 403;
+                next(err);
+            }
+        }
+        
+    }

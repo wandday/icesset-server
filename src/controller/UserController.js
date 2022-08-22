@@ -1,7 +1,8 @@
-import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser} from '../models/user'
+import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser, unsuspendUser} from '../models/user'
 import { hashPassword } from '../utility/util';
 import TokenController from './TokenController';
 import bcrypt from 'bcryptjs';
+import { active } from '../config/config';
 
 
 
@@ -58,6 +59,11 @@ export default class UserController {
             err.status = 404;
             throw err;
         }
+        if (user.userStatus != active){
+            const err = new Error(`Your access have been revoked, contact admin`);
+            err.status = 404;
+            throw err;
+        }
         const correct = bcrypt.compareSync(logUser.password, user.password);
         if (user && correct)
         { const token = await tokenController.generateToken(user);
@@ -97,6 +103,22 @@ export default class UserController {
         }
         else { 
             const response = await suspendUser(userId)
+            if(response) {
+                return {response}
+                }
+        } 
+    }
+
+
+    async unsuspendUser(userId){
+        const result = await findUserById(userId)
+        if (result[0].length < 1){
+            const err = new Error(`User with ${userId}  does not exist.`);
+            err.status = 400;
+            throw err;
+        }
+        else { 
+            const response = await unsuspendUser(userId)
             if(response) {
                 return {response}
                 }

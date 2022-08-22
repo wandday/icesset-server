@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validate } from "express-validation";
-import { validUser } from "../validation";
+import { validUser, validChangePassword } from "../validation";
 import { hasRole, isUser } from "../middlewares/index";
 import { admin, active } from '../config/config';
 import UserController from "../controller/UserController";
@@ -116,6 +116,21 @@ router.patch(
       res
         .status(200)
         .json({ message: "User's access has been restored successfully"});
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.patch(
+  "/user/changepassword",
+  validate(validChangePassword),
+  async (req, res, next) => {
+    try {
+      const result = await userController.changePassword(req.body);
+      res
+        .status(200)
+        .json({ message: "Your password have been changed successfully"});
     } catch (e) {
       next(e);
     }

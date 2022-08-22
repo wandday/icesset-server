@@ -1,8 +1,9 @@
-import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser, unsuspendUser} from '../models/user'
+import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser, unsuspendUser, changePassword} from '../models/user'
 import { hashPassword } from '../utility/util';
 import TokenController from './TokenController';
 import bcrypt from 'bcryptjs';
 import { active } from '../config/config';
+import {transporter_pro} from "../config/config";
 
 
 
@@ -16,13 +17,28 @@ export default class UserController {
         err.status = 400;
         throw err;
        } else {
+        user.rawPassword = user.password
         user.password = await hashPassword(user.password)
+        
         const result = await createUser(user)
         if(result) {
-            return {
-                message: "User created successfully."
-            }
-        }else {
+            // Welcome Mail
+            const mailOptions = {
+                from: process.env.AUTH_EMAIL,
+                to: user.email,
+                subject: "Welcome to Icesset",
+                html: `<p> Hi, ${user.firstName} Your account has been created with the following credentials: <br> 
+                Email: ${user.email} <br> Password: ${user.rawPassword} <br> You are advised to login and change your password. <br> If you did not request for an account on Icesset, please send us a mail on admin@icesset.com <br> <br> Regards <br><br> Icesset Team.   </p>`
+            };
+
+            transporter_pro.sendMail(mailOptions)
+            
+        return {
+            message: "User created successfully."
+        }
+            
+        }
+        else {
             const err = new Error(`Unable to create user.`);
             err.status = 400;
             throw err;
@@ -122,6 +138,36 @@ export default class UserController {
             if(response) {
                 return {response}
                 }
+        } 
+    }
+
+
+    async changePassword(passwordInfo){
+        const result = await findUserById(passwordInfo.userId)
+        console.log(result[0][0].password)
+        const oldPassword = result[0][0].password
+        console.log(oldPassword)
+        if (result[0].length < 1){
+            const err = new Error(`User does not exist.`);
+            err.status = 400;
+            throw err;
+        }
+        
+        else { 
+            
+            const correct = bcrypt.compareSync(passwordInfo.currentPassword, oldPassword);
+            if (result && correct){
+                passwordInfo.newPassword = await hashPassword(passwordInfo.newPassword)
+                const response = await changePassword(passwordInfo)
+                if(response) {
+                return {response}
+            } 
+            } else {
+                const err = new Error("The password you entered is not correct.");
+                err.status = 203;
+                throw err;
+            }
+            
         } 
     }
 

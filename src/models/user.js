@@ -36,3 +36,8 @@ export const updateUser = async (userId, update) => {
     return await pool.query('UPDATE users SET userStatus=? where user_id=?',  [ 'active', userId])
  }
 
+
+ export const changePassword = async (passwordInfo) => {
+   const {userId, currentPassword, newPassword} = passwordInfo
+    return await pool.query('UPDATE users SET password=? where user_id=?',  [ newPassword, userId])
+ }

@@ -1,4 +1,4 @@
-import {createTransaction, getAllTransactions, getOwnTransactions} from '../models/transaction'
+import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions} from '../models/transaction'
 
 
 export default class TransactionController {
@@ -48,6 +48,36 @@ export default class TransactionController {
 
     async getOwnTransactions(userId){
         const result = await getOwnTransactions(userId)
+        if (!result){
+            const err = new Error(`Could not retrive transaction record for users`);
+            err.status = 400;
+            throw err;
+        }
+        else {
+            const response = [...new Map(result[0].map(item =>
+                [item['transaction_id'], item])).values()]
+                response.forEach(e => {
+                    e.data = []
+                   result[0].forEach(d => {
+                       if(e.transaction_id == d.transaction_id) {
+                         e.data.push({
+                           item_id: d.item_id,
+                           quantity: d.quantity
+                         })
+                       }
+                   })
+                   e.item_id = undefined
+                   e.quantity = undefined
+                  })
+                return response
+        } 
+        
+    }
+
+
+
+    async getOneTransactions(transId){
+        const result = await getOneTransactions(transId)
         if (!result){
             const err = new Error(`Could not retrive transaction record for users`);
             err.status = 400;

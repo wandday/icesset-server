@@ -48,9 +48,23 @@ router.post(
     }
   );
 
+  router.get(
+    "/transactions/:id",
+    async (req, res, next) => {
+      try {
+        const result = await transactionController.getOneTransactions(req.params.id);
+        res
+          .status(200)
+          .json({ message: "transaction record retrieved successfully", data: result });
+      } catch (e) {
+        next(e);
+      }
+    }
+  );
+
 
   router.post(
-    "/collect",
+    "/transactions/collect",
     async (req, res, next) => {
       try {
         const result = await transactionController.collectTransfer(req.body);

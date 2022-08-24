@@ -39,6 +39,21 @@ export const validInventory = {
   }),
 };
 
+
+
+export const validInventorylocation = {
+  body: Joi.object({
+  item_id: Joi.number().min(1).required(),
+  store_id: Joi.number().min(1).required(),
+  store_name: Joi.string().min(2).required(),
+  quantity: Joi.number().min(1).required(),
+  user_id: Joi.number().min(1).required(),
+  user_name: Joi.string().min(2).required()
+  }),
+};
+
+
+
 export const location = {
   body: Joi.object({
   name: Joi.string().min(3).required(),

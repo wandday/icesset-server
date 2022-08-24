@@ -1,4 +1,4 @@
-import { findItemById, findAllItem, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson} from '../models/inventory'
+import { findItemById, findAllItem, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
 
 
 export default class InventoryController {
@@ -103,6 +103,21 @@ export default class InventoryController {
     }
 
 
+
+    async createInventoryLocation(item){
+        const result = await createInventoryLocation(item)
+        if(result) {
+             return {
+                 message: "Item added successfully to location."
+             }
+         }else {
+             const err = new Error("Unable to add item to location.");
+             err.status = 400;
+             throw err;
+         } 
+    }
+
+
     async getAllInventory(){
         const result = await findAllItem()
         if (!result){
@@ -160,20 +175,20 @@ export default class InventoryController {
 
 
 
-    async updateInventory(itemId, update){
-        const result = await findItemById(itemId)
-        if (result[0].length < 1){
-            const err = new Error(`Item number ${itemId}  does not exist in this inventory.`);
-            err.status = 400;
-            throw err;
-        }
-        else {
-            const response = await updateInventory(itemId, update)
-            if(response) {
-                return {response}
-                }
-        } 
-    }
+    // async updateInventory(itemId, update){
+    //     const result = await findItemById(itemId)
+    //     if (result[0].length < 1){
+    //         const err = new Error(`Item number ${itemId}  does not exist in this inventory.`);
+    //         err.status = 400;
+    //         throw err;
+    //     }
+    //     else {
+    //         const response = await updateInventory(itemId, update)
+    //         if(response) {
+    //             return {response}
+    //             }
+    //     } 
+    // }
 
     async findItem(keyWord){
         const result = await findItem(keyWord)

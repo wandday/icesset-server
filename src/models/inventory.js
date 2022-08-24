@@ -98,3 +98,10 @@ export const createInventory = async (item) => {
    const {store_name} = location
    return await pool.query('INSERT into locations SET store_name=?', [store_name])
 }
+
+
+export const createInventoryLocation = async (item) => {
+   console.log(item)
+   const {item_id, store_id, store_name, quantity, user_id, user_name} = item
+   return await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [item_id, store_id, store_name, quantity, user_id, user_name])
+}

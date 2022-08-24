@@ -9,7 +9,7 @@ export const findUserById = async (user_id) => {
  }
 
 export const findAllUsers = async () => {
-    return await pool.query('select * from users')
+    return await pool.query('select * from users ORDER BY dateCreated DESC')
  }
 
 export const createUser = async (user) => {

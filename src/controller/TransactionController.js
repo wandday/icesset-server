@@ -33,11 +33,15 @@ export default class TransactionController {
                        if(e.transaction_id == d.transaction_id) {
                          e.data.push({
                            item_id: d.item_id,
+                           qyt_loc_id: d.qyt_loc_id,
+                           store_name: d.store_name,
                            quantity: d.quantity
                          })
                        }
                    })
                    e.item_id = undefined
+                   e.qyt_loc_id = undefined
+                   e.store_name = undefined
                    e.quantity = undefined
                   })
                 return response
@@ -62,11 +66,15 @@ export default class TransactionController {
                        if(e.transaction_id == d.transaction_id) {
                          e.data.push({
                            item_id: d.item_id,
+                           qyt_loc_id: d.qyt_loc_id,
+                           store_name: d.store_name,
                            quantity: d.quantity
                          })
                        }
                    })
                    e.item_id = undefined
+                   e.qyt_loc_id = undefined
+                   e.store_name = undefined
                    e.quantity = undefined
                   })
                 return response
@@ -92,11 +100,15 @@ export default class TransactionController {
                        if(e.transaction_id == d.transaction_id) {
                          e.data.push({
                            item_id: d.item_id,
+                           qyt_loc_id: d.qyt_loc_id,
+                           store_name: d.store_name,
                            quantity: d.quantity
                          })
                        }
                    })
                    e.item_id = undefined
+                   e.qyt_loc_id = undefined
+                   e.store_name = undefined
                    e.quantity = undefined
                   })
                 return response

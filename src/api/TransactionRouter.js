@@ -1,5 +1,7 @@
 import { Router } from "express";
 import TransactionController from "../controller/TransactionController";
+import { hasRole } from "../middlewares/index";
+import { admin} from '../config/config';
 
 const router = Router();
 const transactionController =  new TransactionController()
@@ -21,6 +23,7 @@ router.post(
   
   router.get(
     "/transactions/all",
+    // hasRole(admin),
     async (req, res, next) => {
       try {
         const result = await transactionController.getAllTransactions();

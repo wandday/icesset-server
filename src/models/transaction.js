@@ -52,8 +52,13 @@ export const getOneTransactions = async ( transId) => {
 
 
  export const collectTransfer = async (collect) => {
-    const {item_id, store_id, store_name, quantity, user_id, user_name, transaction_id} = collect
-     await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [item_id, store_id, store_name, quantity, user_id, user_name])
+    const { batchInfo:{ receivedBy,  storedIn, transaction_id,}, newLotDetails } = collect
+     
+    await pool.query('UPDATE transactions SET receivedBy=?, stored_in=?, transaction_status=? where transaction_id=?', [receivedBy, storedIn, "Completed", transaction_id])
+    
+    newLotDetails.forEach(el => {
+      pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [el.item_id, el.store_id, el.store_name, el.quantity, el.user_id, el.user_name])
 
-     await pool.query('UPDATE transactions SET receivedBy=?, stored_in=?, transaction_status=? where transaction_id=?', [user_name, store_name, "Completed", transaction_id])
+     })
+     return collect;
  }

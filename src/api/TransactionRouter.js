@@ -66,7 +66,7 @@ router.post(
   );
 
 
-  router.post(
+  router.patch(
     "/transactions/collect",
     async (req, res, next) => {
       try {

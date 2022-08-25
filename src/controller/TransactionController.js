@@ -114,31 +114,34 @@ export default class TransactionController {
                 return response
         } 
         
-    }
-
+    };
 
     async collectTransfer(collect){
         const result = await collectTransfer(collect)
-        if(result) {
-            // console.log(result);
-            return {
-                message: "Items sucessfully collected."
-            }
-        }else {
-            const err = new Error("Unable to collect item.");
+        if(!result) {
+            const err = new Error("Unable to save items in selected location.");
             err.status = 400;
             throw err;
+        }else {
+            return {
+                message: "Items sucessfully saved in selected location"
+            }
         } 
     }
 
-    // async getTransactions(userId){
-    //     const result = await getAllTransactions(userId)
-    //     if (!result){
-    //         const err = new Error(`Could not retrive transaction record for user with ID ${userId}`);
+    // async collectTransfer(collect){
+    //     const result = await collectTransfer(collect)
+    //     if(result) {
+    //         return {
+    //             message: "Items sucessfully saved in selected location"
+    //         }
+    //     }else {
+    //         const err = new Error("Unable to save items in selected location.");
     //         err.status = 400;
     //         throw err;
-    //     }
-    //     else return result[0]
+    //     } 
     // }
 
+
+    
 }

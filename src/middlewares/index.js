@@ -48,20 +48,50 @@ export const hasRole = (role, request, response, next) => {
 };
 
 
-
-
-
-export const isUser = (userStatus, request, response, next) => {
+export const isUser = (status, request, response, next) => {
     return(request, response, next) => {
-            if (user.info.userStatus == userStatus) {
-                request.user = user;
-                //console.log(user);
-                next();
-            } else{
-                const err = new Error("Access Denied");
-                err.status = 403;
+        const bearerHeader = request.headers.authorization;
+        if (typeof bearerHeader !== "undefined"){
+            const bearerToken = bearerHeader.split(" ");
+            const token = bearerToken[1]
+            if (!token) {
+                const err = new Error(
+                    'You need authentication to access this resource'
+                );
+                err.status = 401;
                 next(err);
+            } else{
+                next();
             }
+            
+        } else {
+            const err = new Error(
+                'You need authentication to access this resource'
+            );
+            err.status = 401;
+            next(err);
         }
+    };
+};
+
+
+
+
+
+
+
+
+// export const isUser = (userStatus, request, response, next) => {
+//     return(request, response, next) => {
+//             if (user.info.userStatus == userStatus) {
+//                 request.user = user;
+//                 //console.log(user);
+//                 next();
+//             } else{
+//                 const err = new Error("Access Denied");
+//                 err.status = 403;
+//                 next(err);
+//             }
+//         }
         
-    }
+//     }

@@ -3,8 +3,8 @@ import { validate } from "express-validation";
 import { validInventory, validInventorylocation } from "../validation";
 import { validlocation } from "../validation";
 import InventoryController from "../controller/InventoryController";
-import { hasRole } from "../middlewares/index";
-import { admin } from '../config/config';
+import { hasRole, isUser } from "../middlewares/index";
+import { active, admin } from '../config/config';
 
 
 
@@ -31,6 +31,7 @@ router.post(
 
 router.get(
   "/locations/",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getAlllocations();
@@ -46,6 +47,7 @@ router.get(
 
 router.get(
   "/locations/:id",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getLocation(req.params.id);
@@ -61,6 +63,7 @@ router.get(
 
 router.get(
   "/items/locations/:id",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getItemsInLocation(req.params.id);
@@ -111,6 +114,7 @@ router.post(
 
 router.get(
   "/inventory/",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getAllInventory();
@@ -127,6 +131,7 @@ router.get(
 
 router.get(
   "/inventory/:id",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getInventory(req.params.id);
@@ -174,7 +179,7 @@ router.post(
   "/inventory/morelocation",
   
   validate(validInventorylocation),
-  // hasRole(admin),
+  hasRole(admin),
   async (req, res, next) => {
     try {
       const result = await inventoryController.createInventoryLocation(req.body);

@@ -83,7 +83,7 @@ export default class UserController {
         const correct = bcrypt.compareSync(logUser.password, user.password);
         if (user && correct)
         { const token = await tokenController.generateToken(user);
-        return { accessToken: `Bearer ${token}`, role: user.role, info: user };
+        return { accessToken: `Bearer ${token}`, role: user.role, status: user.userStatus, info: user };
         } 
         else {
         const err = new Error("Incorrect Credentials.");

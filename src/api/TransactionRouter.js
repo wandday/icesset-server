@@ -1,7 +1,8 @@
 import { Router } from "express";
 import TransactionController from "../controller/TransactionController";
-import { hasRole } from "../middlewares/index";
-import { admin} from '../config/config';
+import { hasRole, isUser } from "../middlewares/index";
+import { admin, active} from '../config/config';
+
 
 const router = Router();
 const transactionController =  new TransactionController()
@@ -23,7 +24,7 @@ router.post(
   
   router.get(
     "/transactions/all",
-    // hasRole(admin),
+    hasRole(admin),
     async (req, res, next) => {
       try {
         const result = await transactionController.getAllTransactions();
@@ -39,6 +40,7 @@ router.post(
 
   router.get(
     "/transactions/user/:id",
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.getOwnTransactions(req.params.id);
@@ -53,6 +55,7 @@ router.post(
 
   router.get(
     "/transactions/:id",
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.getOneTransactions(req.params.id);

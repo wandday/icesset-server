@@ -35,7 +35,8 @@ export default class TransactionController {
                            item_id: d.item_id,
                            qyt_loc_id: d.qyt_loc_id,
                            store_name: d.store_name,
-                           quantity: d.quantity
+                           quantity: d.quantity,
+                           trans_quantity: d.trans_quantity,
                          })
                        }
                    })
@@ -43,6 +44,7 @@ export default class TransactionController {
                    e.qyt_loc_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.trans_quantity = undefined
                   })
                 return response
         } 
@@ -104,7 +106,8 @@ export default class TransactionController {
                            item_id: d.item_id,
                            qyt_loc_id: d.qyt_loc_id,
                            store_name: d.store_name,
-                           quantity: d.quantity
+                           quantity: d.quantity,
+                           trans_quantity: d.trans_quantity,
                          })
                        }
                    })
@@ -112,6 +115,7 @@ export default class TransactionController {
                    e.qyt_loc_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.trans_quantity = undefined
                   })
                 return response
         } 

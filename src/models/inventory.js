@@ -33,7 +33,7 @@ export const getItemsWithPerson = async (userId) => {
 }
 
 export const findAllItem = async () => {
-   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id')
+   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.qyt_loc_id DESC')
 }
 
 export const findItem = async (keyWord) => {

@@ -114,7 +114,7 @@ router.post(
 
 router.get(
   "/inventory/",
-  isUser(active),
+  // isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getAllInventory();
@@ -131,7 +131,7 @@ router.get(
 
 router.get(
   "/inventory/:id",
-  isUser(active),
+  // isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getInventory(req.params.id);

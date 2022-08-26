@@ -17,8 +17,13 @@ export const createTransaction = async (trans) => {
     console.log(transId)
 
     transactionItem.forEach(el  => {
-        pool.query('INSERT into transaction_item SET transaction_id=?, item_id=?, qyt_loc_id=?, quantity=?', [transId, el.item_id, el.qyt_loc_id, el.quantity])
+        pool.query('INSERT into transaction_item SET transaction_id=?, item_id=?, qyt_loc_id=?, trans_quantity=?', [transId, el.item_id, el.qyt_loc_id, el.quantity])
     });
+
+
+//     transactionItem.forEach(el  => {
+//       pool.query('UPDATE quantity_location SET quantity=? where qyt_loc_id=?', [ el.quantity, el.qyt_loc_id])
+//   });
 
    
    

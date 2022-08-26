@@ -28,6 +28,7 @@ router.post(
 
 router.get(
   "/users/:id",
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await userController.getUser(req.params.id);
@@ -41,7 +42,8 @@ router.get(
 );
 
 router.get(
-  "/users/", 
+  "/users/",
+  isUser(active), 
   async (req, res, next) => {
     try {
       const result = await userController.getAllUsers();
@@ -57,7 +59,6 @@ router.get(
 
 router.post(
   "/users/login",
-  // isUser(active),
   async (req, res, next) => {
     try {
       const result = await userController.logUserIn(req.body);
@@ -124,6 +125,7 @@ router.patch(
 
 router.patch(
   "/user/changepassword",
+  isUser(active),
   validate(validChangePassword),
   async (req, res, next) => {
     try {

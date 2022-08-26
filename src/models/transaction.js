@@ -21,9 +21,9 @@ export const createTransaction = async (trans) => {
     });
 
 
-//     transactionItem.forEach(el  => {
-//       pool.query('UPDATE quantity_location SET quantity=? where qyt_loc_id=?', [ el.quantity, el.qyt_loc_id])
-//   });
+    transactionItem.forEach(el  => {
+      pool.query(`UPDATE quantity_location SET quantity = quantity - ?  where qyt_loc_id=?`, [ el.quantity, el.qyt_loc_id])
+  });
 
    
    

@@ -73,7 +73,7 @@ export default class TransactionController {
                            store_name: d.store_name,
                            quantity: d.quantity,
                            description: d.description,
-                           trans_quantity: d.trans_quantity,
+                           trans_quantity: d.trans_quantity
                          })
                        }
                    })

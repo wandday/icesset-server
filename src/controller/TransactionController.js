@@ -68,6 +68,7 @@ export default class TransactionController {
                        if(e.transaction_id == d.transaction_id) {
                          e.data.push({
                            item_id: d.item_id,
+                           item_name: d.item_name,
                            qyt_loc_id: d.qyt_loc_id,
                            store_name: d.store_name,
                            quantity: d.quantity,
@@ -76,6 +77,7 @@ export default class TransactionController {
                        }
                    })
                    e.item_id = undefined
+                   e.item_name = undefined
                    e.qyt_loc_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined

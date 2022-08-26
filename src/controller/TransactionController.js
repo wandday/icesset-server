@@ -72,6 +72,7 @@ export default class TransactionController {
                            qyt_loc_id: d.qyt_loc_id,
                            store_name: d.store_name,
                            quantity: d.quantity,
+                           description: d.description,
                            trans_quantity: d.trans_quantity,
                          })
                        }
@@ -81,6 +82,7 @@ export default class TransactionController {
                    e.qyt_loc_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.description = undefined
                    e.trans_quantity = undefined
                   })
                 return response

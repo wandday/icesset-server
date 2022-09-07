@@ -13,7 +13,7 @@ export const findAllUsers = async () => {
  }
 
 export const createUser = async (user) => {
-    console.log(user)
+   //  console.log(user)
     const {firstName, lastName, mobilePhone, email, password, role} = user
     return await pool.query('INSERT into users SET firstName=?, lastName=?, mobilePhone=?, email=?, password=?, role=?, userStatus=?',  [firstName, lastName, mobilePhone, email, password, role, 'active' ])
  }

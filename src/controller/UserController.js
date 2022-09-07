@@ -10,7 +10,7 @@ import {transporter_pro} from "../config/config";
 
 export default class UserController {
     async createUser(user){
-        console.log(user)
+        // console.log(user)
        const result =  await findUserByEmail(user.email)
        if (result[0].length > 0){
         const err = new Error(`User with ${user.email} already exist.`);
@@ -69,6 +69,7 @@ export default class UserController {
     async logUserIn(logUser){
         let user =  await findUserByEmail(logUser.email)
         user = user[0][0]
+        console.log(user.email)
         const tokenController = new TokenController();
         if (!user){
             const err = new Error(`User with ${logUser.email} does not  exist.`);

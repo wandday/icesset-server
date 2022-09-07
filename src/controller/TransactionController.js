@@ -1,12 +1,29 @@
 import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions} from '../models/transaction'
 
+import {transporter_pro} from "../config/config";
+
+import {findUserByEmail, findUserById} from '../models/user'
+
 
 export default class TransactionController {
     
     async createTransaction(trans){
+        const getUser = await findUserById(trans.waybillDetails.sent_to_id)
+        const receiver = getUser[0][0]
+        console.log(receiver.email)
         const result = await createTransaction(trans)
         if(result) {
-            // console.log(result);
+            //Transaction Mail
+            const mailOptions = {
+                from: process.env.AUTH_EMAIL,
+                to: receiver.email,
+                subject: "New Items Inbound",
+                html: `<p> Hi, ${trans.waybillDetails.sent_to_name} <br> <br> Some Items have been transfer to you from ${trans.transactionDetails.created_by_name} <br> Ensure you login and collect these items upon arrival
+                 <br> <br> Regards <br><br> Icesset Team. </p>`
+            };
+
+            transporter_pro.sendMail(mailOptions)
+
             return {
                 message: "Transaction completed."
             }

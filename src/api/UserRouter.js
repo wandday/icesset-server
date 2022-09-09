@@ -28,7 +28,7 @@ router.post(
 
 router.get(
   "/users/:id",
-  // isUser(active),
+  isUser(active),
   async (req, res, next) => {
     try {
       const result = await userController.getUser(req.params.id);
@@ -43,7 +43,7 @@ router.get(
 
 router.get(
   "/users/",
-  // isUser(active), 
+  isUser(active), 
   async (req, res, next) => {
     try {
       const result = await userController.getAllUsers();

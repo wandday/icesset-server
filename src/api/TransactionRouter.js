@@ -9,6 +9,7 @@ const transactionController =  new TransactionController()
 
 router.post(
     "/transaction",
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.createTransaction(req.body);
@@ -40,7 +41,7 @@ router.post(
 
   router.get(
     "/transactions/user/:id",
-    // isUser(active),
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.getOwnTransactions(req.params.id);
@@ -55,7 +56,7 @@ router.post(
 
   router.get(
     "/transactions/:id",
-    // isUser(active),
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.getOneTransactions(req.params.id);
@@ -70,6 +71,7 @@ router.post(
 
 
   router.patch(
+    isUser(active),
     "/transactions/collect",
     async (req, res, next) => {
       try {

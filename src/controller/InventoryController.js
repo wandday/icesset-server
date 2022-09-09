@@ -162,7 +162,10 @@ export default class InventoryController {
                             supplier_name: d.supplier_name,
                             supplier_phone: d.supplier_phone,
                             supplier_email: d.supplier_email,
-                            item_condition: d.item_condition
+                            item_condition: d.item_condition,
+                            qyt_loc_id: d.qyt_loc_id,
+                            item_status: d.item_status,
+                            date_in_loc: d.date_in_loc,
                            
                          })
                        }
@@ -170,13 +173,16 @@ export default class InventoryController {
                    e.store_id = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.unit = undefined
                    e.user_id = undefined
                    e.user_name = undefined
                    e.supplier_name = undefined
                    e.supplier_phone = undefined
                    e.supplier_email = undefined
-                   e.supplier_email = undefined
                    e.item_condition = undefined
+                   e.qyt_loc_id = undefined
+                   e.item_status = undefined
+                   e.date_in_loc = undefined
 
                   })
                 return response

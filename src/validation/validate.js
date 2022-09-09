@@ -52,8 +52,13 @@ export const validInventorylocation = {
   store_id: Joi.number().min(1).required(),
   store_name: Joi.string().min(2).required(),
   quantity: Joi.number().min(1).required(),
+  unit: Joi.string().min(1).required(),
   user_id: Joi.number().min(1).required(),
-  user_name: Joi.string().min(2).required()
+  user_name: Joi.string().min(2).required(),
+  supplier_name: Joi.string().min(2),
+  supplier_phone: Joi.number().min(9),
+  supplier_email: Joi.string().min(),
+  item_condition: Joi.string().min().required(),
   }),
 };
 

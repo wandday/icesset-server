@@ -71,8 +71,8 @@ router.post(
 
 
   router.patch(
-    isUser(active),
     "/transactions/collect",
+    isUser(active),
     async (req, res, next) => {
       try {
         const result = await transactionController.collectTransfer(req.body);

@@ -57,8 +57,8 @@ export const validInventorylocation = {
   user_name: Joi.string().min(2).required(),
   supplier_name: Joi.string().min(2),
   supplier_phone: Joi.number().min(9),
-  supplier_email: Joi.string().min(),
-  item_condition: Joi.string().min().required(),
+  supplier_email: Joi.string().min(3),
+  item_condition: Joi.string().min(2).required(),
   }),
 };
 

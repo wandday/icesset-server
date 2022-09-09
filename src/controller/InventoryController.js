@@ -156,8 +156,13 @@ export default class InventoryController {
                             store_id: d.store_id,
                             store_name: d.store_name,
                             quantity: d.quantity,
+                            unit: d.unit,
                             user_id: d.user_id,
-                            user_name: d.user_name
+                            user_name: d.user_name,
+                            supplier_name: d.supplier_name,
+                            supplier_phone: d.supplier_phone,
+                            supplier_email: d.supplier_email,
+                            item_condition: d.item_condition
                            
                          })
                        }
@@ -167,6 +172,12 @@ export default class InventoryController {
                    e.quantity = undefined
                    e.user_id = undefined
                    e.user_name = undefined
+                   e.supplier_name = undefined
+                   e.supplier_phone = undefined
+                   e.supplier_email = undefined
+                   e.supplier_email = undefined
+                   e.item_condition = undefined
+
                   })
                 return response
         } 

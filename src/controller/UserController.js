@@ -69,7 +69,7 @@ export default class UserController {
     async logUserIn(logUser){
         let user =  await findUserByEmail(logUser.email)
         user = user[0][0]
-        console.log(user.email)
+        // console.log(user.email)
         const tokenController = new TokenController();
         if (!user){
             const err = new Error(`User with ${logUser.email} does not  exist.`);

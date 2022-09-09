@@ -29,13 +29,18 @@ export const validInventory = {
   item_name: Joi.string().min(3).required(),
   category: Joi.string().min(3).required(),
   description: Joi.string().min(3),
-  supplier: Joi.string().min(3),
-  supplierContact: Joi.string().min(3),
+  
   locations: Joi.array().items({store_id: Joi.number().min(1).required(),
     store_name: Joi.string().min(3).required(),
     quantity: Joi.number().min(2).required(),
+    unit: Joi.string().min(1).required(),
     user_id: Joi.number().min(1).required(),
-    user_name: Joi.string().min(3).required()})
+    user_name: Joi.string().min(3).required(),
+    supplier_name: Joi.string().min(2),
+    supplier_phone: Joi.number().min(9),
+    supplier_email: Joi.string().min(3),
+    item_condition: Joi.string().min(2),
+  })
   }),
 };
 

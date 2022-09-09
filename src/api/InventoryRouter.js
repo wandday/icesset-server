@@ -63,7 +63,7 @@ router.get(
 
 router.get(
   "/items/locations/:id",
-  isUser(active),
+  // isUser(active),
   async (req, res, next) => {
     try {
       const result = await inventoryController.getItemsInLocation(req.params.id);

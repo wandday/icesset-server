@@ -163,6 +163,7 @@ export default class InventoryController {
                             supplier_phone: d.supplier_phone,
                             supplier_email: d.supplier_email,
                             item_condition: d.item_condition,
+                            availability: d.availability,
                             qyt_loc_id: d.qyt_loc_id,
                             item_status: d.item_status,
                             date_in_loc: d.date_in_loc,
@@ -180,6 +181,7 @@ export default class InventoryController {
                    e.supplier_phone = undefined
                    e.supplier_email = undefined
                    e.item_condition = undefined
+                   e.availability = undefined
                    e.qyt_loc_id = undefined
                    e.item_status = undefined
                    e.date_in_loc = undefined

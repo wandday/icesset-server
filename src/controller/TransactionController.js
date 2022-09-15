@@ -87,9 +87,20 @@ export default class TransactionController {
                            item_id: d.item_id,
                            item_name: d.item_name,
                            qyt_loc_id: d.qyt_loc_id,
+                           category: d.category,
                            store_name: d.store_name,
                            quantity: d.quantity,
+                           unit: d.unit,
+                           date_in_loc: d.date_in_loc,
                            description: d.description,
+                           supplier_name: d.supplier_name,
+                           supplier_phone: d.supplier_phone,
+                           supplier_email: d.supplier_email,
+                           user_id: d.user_id,
+                           user_name: d.user_name,
+                           item_condition: d.item_condition,
+                           item_status: d.item_status,
+                           availability: d.availability,
                            trans_quantity: d.trans_quantity
                          })
                        }
@@ -97,9 +108,20 @@ export default class TransactionController {
                    e.item_id = undefined
                    e.item_name = undefined
                    e.qyt_loc_id = undefined
+                   e.category = undefined
                    e.store_name = undefined
                    e.quantity = undefined
+                   e.unit = undefined
+                   e.date_in_loc = undefined
                    e.description = undefined
+                   e.supplier_name = undefined
+                   e.supplier_phone = undefined
+                   e.supplier_email = undefined
+                   e.user_id = undefined
+                   e.user_name = undefined
+                   e.item_condition = undefined
+                   e.item_status = undefined
+                   e.availability = undefined
                    e.trans_quantity = undefined
                   })
                 return response

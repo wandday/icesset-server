@@ -12,7 +12,7 @@ export const findStoreByName = async (name) => {
 }
 
 export const findAllLocations = async () => {
-   return await pool.query('select * from locations ORDER BY store_id DESC')
+   return await pool.query('select * from locations ORDER BY id DESC')
 }
 
 export const findLocationById = async (storeId) => {

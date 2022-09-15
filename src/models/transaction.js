@@ -1,39 +1,46 @@
 
 import {pool } from '../index'
+import uuid4 from "uuid4"
 
 export const createTransaction = async (trans) => {
-    // console.log(trans)
-    const { waybillDetails: { destination, sent_to_id, sent_to_name, courier_name, courier_contact, note}, transactionDetails:{transaction_type, created_by_id, created_by_name, stored_in}, transactionItem} = trans
-    let waybillDetails = await pool.query('INSERT into waybill SET destination=?, sent_to_id=?, sent_to_name=?, courier_name=?, courier_contact=?, note=?',  [destination, sent_to_id, sent_to_name, courier_name, courier_contact, note ])
+    const { waybillDetails: { destination, sent_to_id, sent_to_name, courier_name, courier_contact, note}, transactionDetails:{transaction_type, created_by_id, created_by_name, exp_delivery_date, stored_in}, transactionItem} = trans
+
+    let waybillId = uuid4()
+    let waybillDetails = await pool.query('INSERT into waybill SET waybill_id=?, destination=?, sent_to_id=?, sent_to_name=?, courier_name=?, courier_contact=?, note=?',  [waybillId, destination, sent_to_id, sent_to_name, courier_name, courier_contact, note ])
     
-    let result = await pool.query('SELECT LAST_INSERT_ID()');
-    let waybillId =  result[0][0][`LAST_INSERT_ID()`]
-    console.log(waybillId)
+   //  let result = await pool.query('SELECT LAST_INSERT_ID()');
+   //  let waybillId =  result[0][0][`LAST_INSERT_ID()`]
+   //  console.log(waybillId)
 
-    let transactionDetails = await pool.query('INSERT into transactions SET transaction_status=?, transaction_type=?, waybill_id=?, created_by_id=?, created_by_name=?, receivedBy=?, stored_in=?' ,  ['Pending', transaction_type, waybillId, created_by_id, created_by_name, 'Pending', stored_in ])
+    let transId = uuid4()
+    let transactionDetails = await pool.query('INSERT into transactions SET transaction_id=?, transaction_status=?, transaction_type=?, waybill_id=?, created_by_id=?, created_by_name=?, exp_delivery_date=?, receivedBy=?, stored_in=?' ,  [transId, 'Pending', transaction_type, waybillId, created_by_id, created_by_name, exp_delivery_date, 'Pending', stored_in ])
 
-    let response = await pool.query('SELECT LAST_INSERT_ID()');
-    let transId =  response[0][0][`LAST_INSERT_ID()`]
-    console.log(transId)
-
-    transactionItem.forEach(el  => {
-        pool.query('INSERT into transaction_item SET transaction_id=?, item_id=?, qyt_loc_id=?, trans_quantity=?', [transId, el.item_id, el.qyt_loc_id, el.quantity])
-    });
-
+   //  let response = await pool.query('SELECT LAST_INSERT_ID()');
+   //  let transId =  response[0][0][`LAST_INSERT_ID()`]
+   //  console.log(transId)
 
     transactionItem.forEach(el  => {
       pool.query(`UPDATE quantity_location SET quantity = quantity - ?  where qyt_loc_id=?`, [ el.quantity, el.qyt_loc_id])
-  });
+   });
 
+   transactionItem.forEach(el  => {
    
+   let qyt_loc_id = uuid4()
+
+   let getOutgoingItem = pool.query('select * from quantity_location where qyt_loc_id=?', [el.qyt_loc_id])
+   .then(response => {
+      let outgoingItems = response[0][0]
+      console.log(outgoingItems)
+      pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?, date_in_loc=?', [qyt_loc_id, outgoingItems.item_id, outgoingItems.store_id, outgoingItems.store_name, el.quantity, outgoingItems.unit, outgoingItems.user_id, outgoingItems.user_name, 'In transit', 'available', outgoingItems.supplier_name, outgoingItems.supplier_phone, outgoingItems.supplier_email, outgoingItems.item_condition, outgoingItems.date_in_loc])
+
+      pool.query('INSERT into transaction_item SET transaction_id=?, item_id=?, qyt_loc_id=?, trans_quantity=?', [transId, el.item_id,qyt_loc_id, el.quantity])
+      })
    
+   });
+ 
    return trans;
 }
 
-
-// export const getAllTransactions = async () => {
-//     return await pool.query('select * from transactions INNER JOIN transaction_item ON transactions.transaction_id  = transaction_item.transaction_id INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id' )
-//  }
 
 
  export const getAllTransactions = async () => {

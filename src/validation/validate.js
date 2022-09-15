@@ -30,11 +30,11 @@ export const validInventory = {
   category: Joi.string().min(3).required(),
   description: Joi.string().min(3),
   
-  locations: Joi.array().items({store_id: Joi.number().min(1).required(),
+  locations: Joi.array().items({store_id: Joi.string().min(1).required(),
     store_name: Joi.string().min(3).required(),
     quantity: Joi.number().min(2).required(),
     unit: Joi.string().min(1).required(),
-    user_id: Joi.number().min(1).required(),
+    user_id: Joi.string().min(1).required(),
     user_name: Joi.string().min(3).required(),
     supplier_name: Joi.string().min(2),
     supplier_phone: Joi.number().min(9),
@@ -48,12 +48,12 @@ export const validInventory = {
 
 export const validInventorylocation = {
   body: Joi.object({
-  item_id: Joi.number().min(1).required(),
-  store_id: Joi.number().min(1).required(),
+  item_id: Joi.string().min(1).required(),
+  store_id: Joi.string().min(1).required(),
   store_name: Joi.string().min(2).required(),
   quantity: Joi.number().min(1).required(),
   unit: Joi.string().min(1).required(),
-  user_id: Joi.number().min(1).required(),
+  user_id: Joi.string().min(1).required(),
   user_name: Joi.string().min(2).required(),
   supplier_name: Joi.string().min(2),
   supplier_phone: Joi.number().min(9),
@@ -63,21 +63,6 @@ export const validInventorylocation = {
 };
 
 
-
-export const location = {
-  body: Joi.object({
-  name: Joi.string().min(3).required(),
-  category: Joi.string().min(3).required(),
-  maker: Joi.string().min(3).required(),
-  model: Joi.string().min(3).required(),
-  description: Joi.string().min(3).required(),
-  quantity: Joi.number().min(1).required(),
-  item_condition: Joi.string().min(3).required(),
-  acquired: Joi.string().min(3).required(),
-  location: Joi.string().min(3).required(),
-  Image: Joi.string().min(3)
-  }),
-};
 
 export const validlocation = {
   body: Joi.object({
@@ -89,7 +74,7 @@ export const validlocation = {
 
 export const validPassword = {
   body: Joi.object({
-  user_id: Joi.number().min(1).required(),
+  user_id: Joi.string().min(1).required(),
   resetString: Joi.string().min(1).required(),
   newPassword: Joi.string().min(6).required(),
 
@@ -99,8 +84,8 @@ export const validPassword = {
 
 export const validChangePassword = {
   body: Joi.object({
-  userId: Joi.number().min(1).required(),
-  currentPassword: Joi.string().min(6).required(),
+  userId: Joi.string().min(1).required(),
+  currentPassword: Joi.string().required(),
   newPassword: Joi.string().min(6).required(),
 
   }),

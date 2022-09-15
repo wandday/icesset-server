@@ -1,6 +1,8 @@
 
 import {pool } from '../index'
 
+import uuid4 from "uuid4"
+
 export const findItemByName = async (name) => {
    return await pool.query('select * from inventory where name=?', [name])
 }
@@ -44,64 +46,35 @@ export const findItem = async (keyWord) => {
 }
 
 
-
-
-// export const deleteInventory = async (itemId) => {
-//    return await pool.query('delete from inventory where item_id=?', [itemId])
-// }
-
-
-// export const createInventory = async (item) => {
-//     console.log(item)
-//     const {name, category, maker, model, description, quantity, item_condition, acquired, location, Image  } = item
-//     return await pool.query('INSERT into inventory SET name=?, category=?, maker=?, model=?, description=?, quantity=?, item_condition=?, acquired=?, location=?, Image=?',  [name, category, maker, model, description, quantity, item_condition, acquired, location, Image])
-//  }
-
-
 export const createInventory = async (item) => {
+   
    console.log(item)
    const {item_name, category, description, locations} = item
-   await pool.query('INSERT into items SET item_name=?, category=?, description=?',  [item_name, category, description]);
+   let itemId = uuid4()
+   await pool.query('INSERT into items SET item_id=?, item_name=?, category=?, description=?',  [itemId, item_name, category, description]);
 
-   let result = await pool.query('SELECT LAST_INSERT_ID()');
-   let lastIndex =  result[0][0][`LAST_INSERT_ID()`]
+   // let result = await pool.query('SELECT LAST_INSERT_ID()');
+   // let lastIndex =  result[0][0][`LAST_INSERT_ID()`]
    console.log(locations)
    locations.forEach(el  => {
-      //console.log(e)
-       pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?', [lastIndex, el.store_id, el.store_name, el.quantity, el.unit, el.user_id, el.user_name, 'In store', el.supplier_name, el.supplier_phone, el.supplier_email, el.item_condition])
+      let qyt_loc_id = uuid4()
+       pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?', [qyt_loc_id, itemId, el.store_id, el.store_name, el.quantity, el.unit, el.user_id, el.user_name, 'In store', 'available', el.supplier_name, el.supplier_phone, el.supplier_email, el.item_condition])
    });
    
    return item;
 }
 
-// export const updateInventory = async (itemId, update) => {
-//     console.log(update)
-//     const {name, category, maker, model, description, quantity, item_condition, acquired, location, Image  } = update
-//     return await pool.query('UPDATE inventory SET name=?, category=?, maker=?, model=?, description=?, quantity=?, item_condition=?, acquired=?, location=?, Image=? where item_id=?',  [name, category, maker, model, description, quantity, item_condition, acquired, location, Image, itemId ])
-//  }
-
-
-//  export const updateInventory = async (itemId, update) => {
-//    const {item_name, category, description, locations} = update
-//    await pool.query('UPDATE items SET item_name=?, category=?, description=? where item_id=?',  [item_name, category, description, itemId]);
-
-//    locations.forEach(el  => {
-//        pool.query('UPDATE quantity_location SET store_id=?, quantity=? where item_id=?', [el.store_id, el.quantity, itemId])
-//    });
-   
-//    return update;
-// }
 
 
  export const createLocation = async (location) => {
-   console.log(location)
    const {store_name} = location
-   return await pool.query('INSERT into locations SET store_name=?', [store_name])
+   let storeId = uuid4()
+   return await pool.query('INSERT into locations SET store_id=?, store_name=?', [storeId, store_name])
 }
 
 
 export const createInventoryLocation = async (item) => {
-   console.log(item)
+   let qyt_loc_id = uuid4()
    const {item_id, store_id, store_name, quantity, unit, user_id, user_name, supplier_name, supplier_phone, supplier_email, item_condition} = item
-   return await pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, supplier_name=?,  supplier_phone=?, supplier_email=?, item_condition=?', [item_id, store_id, store_name, quantity, unit, user_id, user_name, 'In store', supplier_name, supplier_phone, supplier_email, item_condition ])
+   return await pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?,  supplier_phone=?, supplier_email=?, item_condition=?', [qyt_loc_id, item_id, store_id, store_name, quantity, unit, user_id, user_name, 'In store', 'available', supplier_name, supplier_phone, supplier_email, item_condition ])
 }

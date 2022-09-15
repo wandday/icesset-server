@@ -1,4 +1,5 @@
 import {pool } from '../index'
+import uuid4 from "uuid4"
 
 export const findUserByEmail = async (email) => {
    return await pool.query('select * from users where email=?', [email])
@@ -13,9 +14,11 @@ export const findAllUsers = async () => {
  }
 
 export const createUser = async (user) => {
-   //  console.log(user)
+
+   let userId = uuid4()
+   
     const {firstName, lastName, mobilePhone, email, password, role} = user
-    return await pool.query('INSERT into users SET firstName=?, lastName=?, mobilePhone=?, email=?, password=?, role=?, userStatus=?',  [firstName, lastName, mobilePhone, email, password, role, 'active' ])
+    return await pool.query('INSERT into users SET user_id=?, firstName=?, lastName=?, mobilePhone=?, email=?, password=?, role=?, userStatus=?',  [userId, firstName, lastName, mobilePhone, email, password, role, 'active'])
  }
 
 export const updateUser = async (userId, update) => {

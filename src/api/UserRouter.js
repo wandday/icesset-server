@@ -123,7 +123,7 @@ router.patch(
   }
 );
 
-router.patch(
+router.put(
   "/user/changepassword",
   isUser(active),
   validate(validChangePassword),

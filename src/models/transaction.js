@@ -31,7 +31,10 @@ export const createTransaction = async (trans) => {
    .then(response => {
       let outgoingItems = response[0][0]
       console.log(outgoingItems)
-      pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?, date_in_loc=?', [qyt_loc_id, outgoingItems.item_id, outgoingItems.store_id, outgoingItems.store_name, el.quantity, outgoingItems.unit, outgoingItems.user_id, outgoingItems.user_name, 'In transit', 'available', outgoingItems.supplier_name, outgoingItems.supplier_phone, outgoingItems.supplier_email, outgoingItems.item_condition, outgoingItems.date_in_loc])
+      if (trans.transactionDetails.transaction_type == 'consume'){
+         pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?, date_in_loc=?', [qyt_loc_id, outgoingItems.item_id, outgoingItems.store_id, outgoingItems.store_name, el.quantity, outgoingItems.unit, outgoingItems.user_id, outgoingItems.user_name, 'Pending Consumption', 'Available', outgoingItems.supplier_name, outgoingItems.supplier_phone, outgoingItems.supplier_email, outgoingItems.item_condition, outgoingItems.date_in_loc]) 
+      } else{
+      pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?, supplier_phone=?, supplier_email=?, item_condition=?, date_in_loc=?', [qyt_loc_id, outgoingItems.item_id, outgoingItems.store_id, outgoingItems.store_name, el.quantity, outgoingItems.unit, outgoingItems.user_id, outgoingItems.user_name, 'In transit', 'Available', outgoingItems.supplier_name, outgoingItems.supplier_phone, outgoingItems.supplier_email, outgoingItems.item_condition, outgoingItems.date_in_loc]) }
 
       pool.query('INSERT into transaction_item SET transaction_id=?, item_id=?, qyt_loc_id=?, trans_quantity=?', [transId, el.item_id,qyt_loc_id, el.quantity])
       })
@@ -62,15 +65,27 @@ export const getOneTransactions = async ( transId) => {
 
 
 
+let date_in_loc = new Date();
+console.log(date_in_loc)
 
  export const collectTransfer = async (collect) => {
-    const { batchInfo:{ receivedBy,  storedIn, transaction_id,}, newLotDetails } = collect
+    const { batchInfo:{ receivedBy,  storedIn, transaction_id}, newLotDetails } = collect
+
+    let getTransactionType = await pool.query('select * from transactions where transaction_id=?', [transaction_id])
+    let transactionType = getTransactionType[0][0]
+    console.log(transactionType.transaction_type)
      
     await pool.query('UPDATE transactions SET receivedBy=?, stored_in=?, transaction_status=? where transaction_id=?', [receivedBy, storedIn, "Completed", transaction_id])
     
+    if (transactionType.transaction_type == 'consume'){
+       newLotDetails.forEach(el => {
+         pool.query('UPDATE quantity_location SET store_id=?, store_name=?, user_id=?, user_name=?, item_status=?, availability=?, date_in_loc=? WHERE qyt_loc_id=?', [el.store_id, el.store_name, el.user_id, el.user_name, 'Consumed', 'Consumed', date_in_loc, el.qyt_loc_id ])
+        })
+    } else{
     newLotDetails.forEach(el => {
-      pool.query('INSERT into quantity_location SET item_id=?, store_id=?, store_name=?, quantity=?, user_id=?, user_name=?', [el.item_id, el.store_id, el.store_name, el.quantity, el.user_id, el.user_name])
-
+      pool.query('UPDATE quantity_location SET store_id=?, store_name=?, user_id=?, user_name=?, item_status=?, date_in_loc=? WHERE qyt_loc_id=?', [el.store_id, el.store_name, el.user_id, el.user_name, 'In Store', date_in_loc, el.qyt_loc_id ])
      })
+   }
+
      return collect;
  }

@@ -3,10 +3,10 @@ import {pool } from '../index'
 import uuid4 from "uuid4"
 
 export const createTransaction = async (trans) => {
-    const { waybillDetails: { destination, sent_to_id, sent_to_name, courier_name, courier_contact, note}, transactionDetails:{transaction_type, created_by_id, created_by_name, exp_delivery_date, stored_in}, transactionItem} = trans
+    const { waybillDetails: { destination, sent_to_id, sent_to_name, sent_to_phone, courier_name, courier_contact, note}, transactionDetails:{transaction_type, created_by_id, created_by_name, exp_delivery_date, stored_in}, transactionItem} = trans
 
     let waybillId = uuid4()
-    let waybillDetails = await pool.query('INSERT into waybill SET waybill_id=?, destination=?, sent_to_id=?, sent_to_name=?, courier_name=?, courier_contact=?, note=?',  [waybillId, destination, sent_to_id, sent_to_name, courier_name, courier_contact, note ])
+    let waybillDetails = await pool.query('INSERT into waybill SET waybill_id=?, destination=?, sent_to_id=?, sent_to_name=?, sent_to_phone=?, courier_name=?, courier_contact=?, note=?',  [waybillId, destination, sent_to_id, sent_to_name, sent_to_phone, courier_name, courier_contact, note ])
     
    //  let result = await pool.query('SELECT LAST_INSERT_ID()');
    //  let waybillId =  result[0][0][`LAST_INSERT_ID()`]

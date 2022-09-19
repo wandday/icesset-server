@@ -122,7 +122,7 @@ router.get(
     //  console.log(finalOffSet)
     //  console.log(lim)
     try {
-      const result = await inventoryController.getAllInventory(finalOffSet, lim);
+      const result = await inventoryController.getAllInventory();
       // const result = await inventoryController.getAllInventory(finalOffSet, lim);
       res
         .status(200)

@@ -34,8 +34,11 @@ export const getItemsWithPerson = async (userId) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where quantity_location.user_id=?', [userId])
 }
 
-export const findAllItem = async (offset, limit) => {
-   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC LIMIT ? OFFSET ?', [limit, offset])
+// export const findAllItem = async (offset, limit) => {
+//    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC LIMIT ? OFFSET ?', [limit, offset])
+// }
+export const findAllItem = async () => {
+   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC')
 }
 
 export const findItem = async (keyWord) => {

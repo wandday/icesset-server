@@ -120,7 +120,8 @@ export default class InventoryController {
 
     async getAllInventory(finalOffSet, lim){
 
-        const result = await findAllItem(finalOffSet, lim)
+        // const result = await findAllItem(finalOffSet, lim)
+        const result = await findAllItem()
         if (!result){
             const err = new Error(`Could not retrive inventory`);
             err.status = 400;

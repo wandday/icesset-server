@@ -125,7 +125,7 @@ router.get(
       const result = await inventoryController.getAllInventory(finalOffSet, lim);
       res
         .status(200)
-        .json({ message: "Items retrieved successfully", data: result });
+        .json({ message: "Items retrieved successfully", count:result.length, data: result  });
     } catch (e) {
       next(e);
     }

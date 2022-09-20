@@ -1,4 +1,4 @@
-import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions} from '../models/transaction'
+import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions, checkDeliveryDate} from '../models/transaction'
 import {findOneItemById} from '../models/inventory'
 
 import {transporter_pro} from "../config/config";
@@ -200,18 +200,10 @@ export default class TransactionController {
         } 
     }
 
-    // async collectTransfer(collect){
-    //     const result = await collectTransfer(collect)
-    //     if(result) {
-    //         return {
-    //             message: "Items sucessfully saved in selected location"
-    //         }
-    //     }else {
-    //         const err = new Error("Unable to save items in selected location.");
-    //         err.status = 400;
-    //         throw err;
-    //     } 
-    // }
+
+    async itemDeliveryStatus(){
+        const result = await checkDeliveryDate()
+    }
 
 
     

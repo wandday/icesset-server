@@ -184,25 +184,5 @@ router.post(
 
 
 
-
-
-
-
-// router.delete(
-//   "/inventory/delete/:id",
-//   hasRole(admin),
-//   async (req, res, next) => {
-//     try {
-//       const result = await inventoryController.deleteInventory(req.params.id);
-//       res
-//         .status(200)
-//         .json({ message: "Item deleted successfully"});
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// );
-
-
   
   export default router;

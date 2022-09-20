@@ -1,4 +1,5 @@
 import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions} from '../models/transaction'
+import {findOneItemById} from '../models/inventory'
 
 import {transporter_pro} from "../config/config";
 
@@ -9,6 +10,19 @@ export default class TransactionController {
     
     async createTransaction(trans){
         const getUser = await findUserById(trans.waybillDetails.sent_to_id)
+        const incomingItems = trans.transactionItem
+
+        for (let i = 0; i < incomingItems.length; i++){
+            const getItem = await findOneItemById(incomingItems[i].qyt_loc_id)
+            console.log(getItem)
+            console.log(incomingItems[i].quantity)
+            console.log(getItem.quantity)
+            if(incomingItems[i].quantity > getItem.quantity) return {
+                message: "Outgoing quantity cannot be more than the quantity in store",
+                status: 400
+            }
+        }
+        
         const receiver = getUser[0][0]
         // console.log(receiver.email)
         const result = await createTransaction(trans)
@@ -19,7 +33,7 @@ export default class TransactionController {
                         from: process.env.AUTH_EMAIL,
                         to: receiver.email,
                         subject: "New Items Inbound",
-                        html: `<p> Hi, ${trans.waybillDetails.sent_to_name} <br> <br> Some Items have been transfer to you from ${trans.transactionDetails.created_by_name} <br> <br> Ensure you login and collect these items upon arrival
+                        html: `<p> Hi, ${trans.waybillDetails.sent_to_name} <br> <br> Some Items have been transfer to you from ${trans.transactionDetails.created_by_name} <br> <br> Ensure you login on https://icesset.netlify.app/login and collect these items upon arrival.  
                         <br> <br> Regards <br><br> Icesset Team. </p>`
                     };
                     transporter_pro.sendMail(mailOptions)
@@ -34,6 +48,8 @@ export default class TransactionController {
             err.status = 400;
             throw err;
         } 
+
+
     }
 
     async getAllTransactions(){

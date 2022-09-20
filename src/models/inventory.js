@@ -23,6 +23,10 @@ export const findLocationById = async (storeId) => {
 export const findItemById = async (itemId) => {
    return await pool.query('select * from items, quantity_location  where  items.item_id = quantity_location.item_id AND items.item_id=?', [itemId])
 }
+export const findOneItemById = async (qyt_loc_id) => {
+   let x = await pool.query('select * from quantity_location  where qyt_loc_id=?', [qyt_loc_id])
+   return x[0][0]
+}
 
 
 export const getItemsInLocation = async (storeId) => {
@@ -34,12 +38,16 @@ export const getItemsWithPerson = async (userId) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where quantity_location.user_id=?', [userId])
 }
 
-// export const findAllItem = async (offset, limit) => {
-//    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC LIMIT ? OFFSET ?', [limit, offset])
-// }
-export const findAllItem = async () => {
-   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC')
+export const findAllItem = async (offset, limit) => {
+   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC LIMIT ? OFFSET ?', [limit, offset])
 }
+
+export const getAllItemsCount = async () => {
+   return await pool.query('SELECT COUNT(qyt_loc_id) as total_items from quantity_location')
+}
+// export const findAllItem = async () => {
+//    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC')
+// }
 
 export const findItem = async (keyWord) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where items.item_name=?', [keyWord])

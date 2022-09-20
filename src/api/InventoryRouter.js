@@ -116,17 +116,16 @@ router.get(
   "/inventory",
   isUser(active),
   async (req, res, next) => {
-    // const offSet = parseInt(req.query.offSet) || 2
-    // const lim = parseInt(req.query.limit)  || 20
-    // const finalOffSet = (offSet -1) * lim 
-    //  console.log(finalOffSet)
-    //  console.log(lim)
+    const offSet = parseInt(req.query.offSet) || 2
+    const lim = parseInt(req.query.limit)  || 20
+    const finalOffSet = (offSet -1) * lim 
+     console.log(finalOffSet)
+     console.log(lim)
     try {
-      const result = await inventoryController.getAllInventory();
-      // const result = await inventoryController.getAllInventory(finalOffSet, lim);
+      const result = await inventoryController.getAllInventory(finalOffSet, lim);
       res
         .status(200)
-        .json({ message: "Items retrieved successfully", count:result.length, data: result  });
+        .json({ message: "Items retrieved successfully", total_items: result.total_items, items:result.all_items  });
     } catch (e) {
       next(e);
     }
@@ -151,21 +150,6 @@ router.get(
 );
 
 
-// router.put(
-//   "/inventory/:id",
-//   // validate(validInventory),
-//   // hasRole(admin),
-//   async (req, res, next) => {
-//     try {
-//       const result = await inventoryController.updateInventory(req.params.id, req.body);
-//       res
-//         .status(200)
-//         .json({ message: "Item updated successfully"});
-//     } catch (e) {
-//       next(e);
-//     }
-//   }
-// );
 
 router.get(
   "/search/:key",

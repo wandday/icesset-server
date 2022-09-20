@@ -1,4 +1,4 @@
-import { findItemById, findAllItem, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
+import { findItemById, findAllItem, getAllItemsCount, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
 
 
 export default class InventoryController {
@@ -120,25 +120,26 @@ export default class InventoryController {
 
     async getAllInventory(finalOffSet, lim){
 
-        // const result = await findAllItem(finalOffSet, lim)
-        const result = await findAllItem()
+        const result = await findAllItem(finalOffSet, lim)
+        const all_items = result[0]
+        const itemCount = await getAllItemsCount()
+        const total_items = itemCount[0][0].total_items
+        console.log(total_items)
         if (!result){
             const err = new Error(`Could not retrive inventory`);
             err.status = 400;
             throw err;
         }
-        else return result[0]
+        else {
+            return {
+                total_items,
+                all_items
+            }
+
+            
+        }
     }
 
-    // async getInventory(itemId){
-    //     const result = await findItemById(itemId)
-    //     if (result[0].length < 1){
-    //         const err = new Error(`Could not retrive item with ID  ${itemId}`);
-    //         err.status = 400;
-    //         throw err;
-    //     }
-    //     else return result[0]
-    // }
 
     async getInventory(itemId){
         const result = await findItemById(itemId)

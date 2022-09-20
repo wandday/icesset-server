@@ -120,7 +120,8 @@ export default class InventoryController {
 
     async getAllInventory(finalOffSet, lim){
 
-        const result = await findAllItem(finalOffSet, lim)
+        const result = await findAllItem()
+        // const result = await findAllItem(finalOffSet, lim)
         const all_items = result[0]
         const itemCount = await getAllItemsCount()
         const total_items = itemCount[0][0].total_items

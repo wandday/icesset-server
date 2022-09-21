@@ -197,21 +197,6 @@ export default class InventoryController {
 
 
 
-    // async updateInventory(itemId, update){
-    //     const result = await findItemById(itemId)
-    //     if (result[0].length < 1){
-    //         const err = new Error(`Item number ${itemId}  does not exist in this inventory.`);
-    //         err.status = 400;
-    //         throw err;
-    //     }
-    //     else {
-    //         const response = await updateInventory(itemId, update)
-    //         if(response) {
-    //             return {response}
-    //             }
-    //     } 
-    // }
-
     async findItem(keyWord){
         const result = await findItem(keyWord)
         if (result[0].length < 1){
@@ -223,19 +208,4 @@ export default class InventoryController {
     }
 
 
-
-    // async deleteInventory(itemId){
-    //     const result = await findItemById(itemId)
-    //     if (result[0].length < 1){
-    //         const err = new Error(`Item number ${itemId}  does not exist in this inventory.`);
-    //         err.status = 400;
-    //         throw err;
-    //     }
-    //     else {
-    //         const response = await deleteInventory(itemId)
-    //         if(response) {
-    //             return {response}
-    //             }
-    //     } 
-    // }
 }

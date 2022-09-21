@@ -85,20 +85,20 @@ router.post(
     }
   );
 
-
-  // router.get(
-  //   "/users/transaction/:id",
-  //   async (req, res, next) => {
-  //     try {
-  //       const result = await transactionController.getTransactions(req.params.id);
-  //       res
-  //         .status(200)
-  //         .json({ message: "transaction record retrieved successfully", data: result });
-  //     } catch (e) {
-  //       next(e);
-  //     }
-  //   }
-  // );
+  router.get(
+    "/records/transaction",
+    // isUser(active),
+    async (req, res, next) => {
+      try {
+        const result = await transactionController.itemDeliveryStatus();
+        res
+          .status(200)
+          .json(result);
+      } catch (e) {
+        next(e);
+      }
+    }
+  );
 
 
 

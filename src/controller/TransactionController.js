@@ -5,6 +5,13 @@ import {transporter_pro} from "../config/config";
 
 import {findUserByEmail, findUserById} from '../models/user'
 
+// var cron = require('node-cron');
+// let cron = import('node-cron');
+
+import cron from 'node-cron';
+
+
+
 
 export default class TransactionController {
     
@@ -202,9 +209,70 @@ export default class TransactionController {
 
 
     async itemDeliveryStatus(){
-        const result = await checkDeliveryDate()
+
+        let currentDate = new Date();
+        let result = await checkDeliveryDate()
+        let transRecord = result[0]
+
+        console.log(transRecord)
+
+        for (let i = 0; i < transRecord.length; i++){
+            if(currentDate > transRecord[i].exp_delivery_date){
+                const getReceiver = await findUserById(transRecord[i].sent_to_id)
+                const sentTo = getReceiver[0][0]
+                console.log(sentTo)
+                const receiverEmail = sentTo.email
+                console.log(receiverEmail)
+
+                const mailOptions = {
+                    from: process.env.AUTH_EMAIL,
+                    to: receiverEmail,
+                    subject: "Reminder: Collect Incoming Items",
+                    html: `<p> Hi, ${sentTo.firstName} <br> <br> Recall that Some Items were transfered to you from ${transRecord[i].created_by_name} on ${transRecord[i].transactionDate} <br> <br> This is a reminder that you should login on https://icesset.netlify.app/login and collect these items.  
+                    <br> <br> Regards <br><br> Icesset Team. </p>`
+                };
+                transporter_pro.sendMail(mailOptions)
+            }
+                return {
+                    message: "Reminder sent successfully."
+                }    
+        }
+        
+
     }
+
+    
 
 
     
 }
+// Reminder Email For Sent Items -CRON JOB
+
+ let task = cron.schedule('* 1 * * *', async () => {
+    console.log('running a task every twelve hours');
+
+    let currentDate = new Date();
+        let result = await checkDeliveryDate()
+        let transRecord = result[0]
+
+        for (let i = 0; i < transRecord.length; i++){
+            if(currentDate > transRecord[i].exp_delivery_date && transRecord[i].transaction_status == 'Pending'){
+                const getReceiver = await  findUserById(transRecord[i].sent_to_id)
+                const sentTo = getReceiver[0][0]
+                const receiverEmail = sentTo.email
+                console.log(receiverEmail)
+
+                const mailOptions = {
+                    from: process.env.AUTH_EMAIL,
+                    to: receiverEmail,
+                    subject: "Reminder: Collect Incoming Items",
+                    html: `<p> Hi, ${sentTo.firstName} <br> <br> Recall that Some Items were transfered to you from ${transRecord[i].created_by_name} on ${transRecord[i].transactionDate} <br> <br> This is a reminder that you should login on https://icesset.netlify.app/login and collect these items.  
+                    <br> <br> Regards <br><br> Icesset Team. </p>`
+                };
+                transporter_pro.sendMail(mailOptions)
+
+                console.log('Reminder sent')
+            }
+        }
+
+  });

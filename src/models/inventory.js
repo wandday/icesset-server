@@ -45,9 +45,6 @@ export const findAllItem = async (limit, offset) => {
 export const getAllItemsCount = async () => {
    return await pool.query('SELECT COUNT(qyt_loc_id) as total_items from quantity_location')
 }
-// export const findAllItem = async () => {
-//    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC')
-// }
 
 export const findItem = async (keyWord) => {
    return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id where items.item_name=?', [keyWord])

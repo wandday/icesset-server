@@ -248,8 +248,8 @@ export default class TransactionController {
 }
 // Reminder Email For Sent Items -CRON JOB
 
- let task = cron.schedule('*/2 * * * *', async () => {
-    console.log('running a task every twelve hours');
+ let task = cron.schedule('*/5 * * * *', async () => {
+    console.log('running a task every two mins');
 
     let currentDate = new Date();
         let result = await checkDeliveryDate()

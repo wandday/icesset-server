@@ -18,7 +18,20 @@ export default class TransactionController {
     async createTransaction(trans){
         const getUser = await findUserById(trans.waybillDetails.sent_to_id)
         const incomingItems = trans.transactionItem
+        
+        // Checking duplicated transfer(Item selected more than once)
+        let itemsIncoming = incomingItems.map(a => a.qyt_loc_id)
+        console.log('itemsIncoming:', itemsIncoming)
 
+        let finalOutput = [...new Set(itemsIncoming)];
+        console.log( 'final:', finalOutput)
+
+        if (finalOutput.length != itemsIncoming.length) return{
+            message: `The same item(s) cannot be selected multiple times in a single transaction`,
+            status: 400
+        }
+
+        //Checking for sufficient quantity before transfer
         for (let i = 0; i < incomingItems.length; i++){
             const getItem = await findOneItemById(incomingItems[i].qyt_loc_id)
             console.log(getItem)
@@ -28,6 +41,12 @@ export default class TransactionController {
                 message: "Outgoing quantity cannot be more than the quantity in store",
                 status: 400
             }
+            // Checking items status for in transit, consumed or pending consumption before transfer
+            if(getItem.item_status != 'In store') return{
+                message: `${getItem.item_status} item(s) cannot be transfered`,
+                status: 400
+            }
+            
         }
         
         const receiver = getUser[0][0]
@@ -58,6 +77,7 @@ export default class TransactionController {
 
 
     }
+
 
     async getAllTransactions(){
         const result = await getAllTransactions()
@@ -248,7 +268,7 @@ export default class TransactionController {
 }
 // Reminder Email For Sent Items -CRON JOB
 
- let task = cron.schedule('*/5 * * * *', async () => {
+ let task = cron.schedule('*/59 * * * *', async () => {
     console.log('running a task every two mins');
 
     let currentDate = new Date();

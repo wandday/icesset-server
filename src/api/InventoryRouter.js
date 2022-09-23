@@ -33,8 +33,8 @@ router.get(
   "/locations/",
   isUser(active),
   async (req, res, next) => {
-    const offSet = parseInt(req.query.offSet)
-    const lim = parseInt(req.query.limit)
+    const offSet = parseInt(req.query.offSet) || 1
+    const lim = parseInt(req.query.limit)  || 1000
     const finalOffSet = (offSet -1) * lim 
     console.log(finalOffSet)
     console.log(lim)

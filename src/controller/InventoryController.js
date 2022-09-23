@@ -1,4 +1,4 @@
-import { findItemById, findAllItem, getAllItemsCount, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
+import { findItemById, allLocationsCount, findAllItem, getAllItemsCount, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
 
 
 export default class InventoryController {
@@ -24,14 +24,25 @@ export default class InventoryController {
     }
 
 
-    async getAlllocations(){
-        const result = await findAllLocations()
+    async getAlllocations(lim, finalOffSet){
+        
+        const locationResult = await findAllLocations(lim, finalOffSet)
+        const result = locationResult[0]
+
+        const getLocationsCount = await allLocationsCount()
+        const total_stores = getLocationsCount[0][0].store_count
+        console.log(total_stores)
         if (!result){
             const err = new Error(`Could not retrive stores`);
             err.status = 400;
             throw err;
         }
-        else return result[0]
+        else {
+            return {
+                total_stores,
+                result
+            }
+        }
     }
 
     async getLocation(storeId){
@@ -66,27 +77,6 @@ export default class InventoryController {
         else return result[0]
     }
 
-
-
-    // async createInventory(item){
-    //     const result =  await findItemByName(item.name)
-    //     if (result[0].length > 0){
-    //      const err = new Error(` ${item.name} already exist.`);
-    //      err.status = 400;
-    //      throw err;
-    //     } else {
-    //      const result = await createInventory(item)
-    //      if(result) {
-    //          return {
-    //              message: "Item added successfully."
-    //          }
-    //      }else {
-    //          const err = new Error("Unable to add item.");
-    //          err.status = 400;
-    //          throw err;
-    //      }
-    //     }  
-    // }
 
     
     async createInventory(item){

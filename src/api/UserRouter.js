@@ -46,10 +46,15 @@ router.get(
   isUser(active), 
   async (req, res, next) => {
     try {
-      const result = await userController.getAllUsers();
+      const offSet = parseInt(req.query.offSet) || 1
+      const lim = parseInt(req.query.limit)  || 10
+      const finalOffSet = (offSet -1) * lim 
+      console.log(finalOffSet)
+      console.log(lim)
+      const result = await userController.getAllUsers(lim, finalOffSet);
       res
         .status(200)
-        .json({ message: "Users retrieved successfully", data: result });
+        .json({ message: "Users retrieved successfully",  data: result });
     } catch (e) {
       next(e);
     }

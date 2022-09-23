@@ -33,8 +33,13 @@ router.get(
   "/locations/",
   isUser(active),
   async (req, res, next) => {
+    const offSet = parseInt(req.query.offSet) || 1
+    const lim = parseInt(req.query.limit)  || 2
+    const finalOffSet = (offSet -1) * lim 
+    console.log(finalOffSet)
+    console.log(lim)
     try {
-      const result = await inventoryController.getAlllocations();
+      const result = await inventoryController.getAlllocations(lim, finalOffSet);
       res
         .status(200)
         .json({ message: "All stores retrieved successfully", data: result });
@@ -119,8 +124,8 @@ router.get(
     const offSet = parseInt(req.query.offSet) || 1
     const lim = parseInt(req.query.limit)  || 10
     const finalOffSet = (offSet -1) * lim 
-     console.log(finalOffSet)
-     console.log(lim)
+    console.log(finalOffSet)
+    console.log(lim)
     try {
       const result = await inventoryController.getAllInventory(lim, finalOffSet);
       res

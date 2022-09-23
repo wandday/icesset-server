@@ -1,4 +1,4 @@
-import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions, checkDeliveryDate} from '../models/transaction'
+import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions, checkDeliveryDate, getAllTransCount} from '../models/transaction'
 import {findOneItemById} from '../models/inventory'
 
 import {transporter_pro} from "../config/config";
@@ -115,7 +115,14 @@ export default class TransactionController {
 
 
     async getOwnTransactions(userId){
+    // async getOwnTransactions(userId, lim, finalOffSet){
+        // const result = await getOwnTransactions( userId, lim, finalOffSet)
         const result = await getOwnTransactions(userId)
+
+        const transactionCount = await getAllTransCount(userId)
+        const total_transaction = transactionCount[0][0].total_trans
+        console.log('total_transaction:', total_transaction)
+
         if (!result){
             const err = new Error(`Could not retrive transaction record for users`);
             err.status = 400;
@@ -169,7 +176,9 @@ export default class TransactionController {
                    e.availability = undefined
                    e.trans_quantity = undefined
                   })
-                return response
+                // return {total_transaction, response}
+                return {total_transaction, response}
+                
         } 
         
     }
@@ -268,7 +277,7 @@ export default class TransactionController {
 }
 // Reminder Email For Sent Items -CRON JOB
 
- let task = cron.schedule('*/59 * * * *', async () => {
+ let task = cron.schedule('* 12 * * *', async () => {
     console.log('running a task every two mins');
 
     let currentDate = new Date();

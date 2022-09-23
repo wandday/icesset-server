@@ -9,8 +9,12 @@ export const findUserById = async (user_id) => {
     return await pool.query('select * from users where user_id=?', [user_id])
  }
 
-export const findAllUsers = async () => {
-    return await pool.query('select * from users ORDER BY dateCreated DESC')
+export const findAllUsers = async (limit, offset) => {
+    return await pool.query('select * from users ORDER BY dateCreated DESC  LIMIT ? OFFSET ?',  [limit, offset])
+ }
+
+export const getAllUsersCount = async () => {
+    return await pool.query('select COUNT(*) as total_users from users')
  }
 
 export const createUser = async (user) => {

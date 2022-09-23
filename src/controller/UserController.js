@@ -1,4 +1,4 @@
-import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser, unsuspendUser, changePassword} from '../models/user'
+import {findUserByEmail, findUserById, findAllUsers, createUser, updateUser, suspendUser, unsuspendUser, changePassword, getAllUsersCount} from '../models/user'
 import { hashPassword } from '../utility/util';
 import TokenController from './TokenController';
 import bcrypt from 'bcryptjs';
@@ -56,14 +56,23 @@ export default class UserController {
         else return result[0][0]
     }
 
-    async getAllUsers(){
-        const result = await findAllUsers() 
+    async getAllUsers(lim, finalOffSet){
+        const allUsersCount = await getAllUsersCount()
+        const total_users = allUsersCount[0][0].total_users
+        console.log(total_users)
+        const usersResult = await findAllUsers(lim, finalOffSet) 
+        const result = usersResult[0]
         if (!result){
             const err = new Error(`Could not retrive users`);
             err.status = 400;
             throw err;
         }
-        else return result[0]
+        else {
+            return {
+                total_users,
+                result
+            }
+        }
     }
 
     async logUserIn(logUser){

@@ -11,8 +11,14 @@ export const findStoreByName = async (name) => {
    return await pool.query('select * from locations where store_name=?', [name])
 }
 
-export const findAllLocations = async () => {
-   return await pool.query('select * from locations ORDER BY id DESC')
+
+export const allLocationsCount = async () => {
+   return await pool.query('select COUNT(*) as store_count from locations')
+}
+
+
+export const findAllLocations = async (limit, offset) => {
+   return await pool.query('select * from locations ORDER BY id DESC LIMIT ? OFFSET ?', [limit, offset])
 }
 
 export const findLocationById = async (storeId) => {

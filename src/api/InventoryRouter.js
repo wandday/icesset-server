@@ -34,7 +34,7 @@ router.get(
   isUser(active),
   async (req, res, next) => {
     const offSet = parseInt(req.query.offSet) || 1
-    const lim = parseInt(req.query.limit)  || 2
+    const lim = parseInt(req.query.limit)  || 10
     const finalOffSet = (offSet -1) * lim 
     console.log(finalOffSet)
     console.log(lim)

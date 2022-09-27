@@ -28,7 +28,7 @@ export default class UserController {
                 to: user.email,
                 subject: "Welcome to Icesset",
                 html: `<p> Hi, ${user.firstName} Your account has been created with the following credentials: <br> 
-                Email: ${user.email} <br> Password: ${user.rawPassword} <br> You are advised to login on https://icesset.netlify.app/login and change your password. <br> If you did not request for an account on Icesset, please send us a mail on seun.owa@providenceresearchltd.com <br> <br> Regards <br><br> Icesset Team.   </p>`
+                Email: ${user.email} <br> Password: ${user.rawPassword} <br> You are advised to login on https://icesset.netlify.app/login and change your password. <br> If you did not request for an account on Icesset, please send us a mail on codedevtestingnow@gmail.com <br> <br> Regards <br><br> Icesset Team.   </p>`
             };
 
             transporter_pro.sendMail(mailOptions)

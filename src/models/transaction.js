@@ -107,3 +107,8 @@ console.log(date_in_loc)
  export const checkDeliveryDate = async () => {
    return await pool.query('select * from transactions INNER JOIN waybill ON transactions.waybill_id = waybill.waybill_id ')
 } 
+
+
+ export const findTransactionById = async (transId) => {
+   return await pool.query('select * from transactions where transaction_id=? ', [transId])
+} 

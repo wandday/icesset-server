@@ -1,4 +1,4 @@
-import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions, checkDeliveryDate, getAllTransCount} from '../models/transaction'
+import {createTransaction, getAllTransactions, getOwnTransactions, collectTransfer, getOneTransactions, checkDeliveryDate, getAllTransCount, findTransactionById} from '../models/transaction'
 import {findOneItemById} from '../models/inventory'
 
 import {transporter_pro} from "../config/config";
@@ -238,12 +238,30 @@ export default class TransactionController {
 
 
     async collectTransfer(collect){
+
+        const getCreatedBy = await findTransactionById(collect.batchInfo.transaction_id)
+        const getUser = getCreatedBy[0][0]
+        console.log('getUserTransRecord', getUser )
+
+        const getCreatedByUser = await findUserById(getUser.created_by_id)
+        const getCreatedByEmail = getCreatedByUser[0][0]
+        console.log('getUserRec', getCreatedByEmail ) 
+
         const result = await collectTransfer(collect)
         if(!result) {
             const err = new Error("Unable to save items in selected location.");
             err.status = 400;
             throw err;
         }else {
+            //Collected notification
+            const mailOptions = {
+                from: process.env.AUTH_EMAIL,
+                to: getCreatedByEmail.email,
+                subject: "Sent Items Collected Successfully",
+                html: `<p> Hi, ${getCreatedByEmail.firstName} <br> <br> The Items you transfered to ${collect.batchInfo.receivedBy} have been collected and stored in ${collect.batchInfo.storedIn} <br> <br> Batch waybill ID: ${getUser.waybill_id} <br> <br>  For more details login to your account on https://icesset.netlify.app/login.  
+                <br> <br> Regards <br><br> Icesset Team. </p>`
+            };
+            transporter_pro.sendMail(mailOptions)
 
             return {
                 message: "Items sucessfully saved in selected location"

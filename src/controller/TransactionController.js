@@ -176,7 +176,6 @@ export default class TransactionController {
                    e.availability = undefined
                    e.trans_quantity = undefined
                   })
-                // return {total_transaction, response}
                 return {total_transaction, response}
                 
         } 
@@ -223,6 +222,21 @@ export default class TransactionController {
         
     };
 
+    // async collectTransfer(collect){
+    //     const result = await collectTransfer(collect)
+    //     if(!result) {
+    //         const err = new Error("Unable to save items in selected location.");
+    //         err.status = 400;
+    //         throw err;
+    //     }else {
+
+    //         return {
+    //             message: "Items sucessfully saved in selected location"
+    //         }
+    //     } 
+    // }
+
+
     async collectTransfer(collect){
         const result = await collectTransfer(collect)
         if(!result) {
@@ -230,11 +244,13 @@ export default class TransactionController {
             err.status = 400;
             throw err;
         }else {
+
             return {
                 message: "Items sucessfully saved in selected location"
             }
         } 
     }
+
 
 
     async itemDeliveryStatus(){
@@ -272,9 +288,35 @@ export default class TransactionController {
 
     
 
+    // async getOwnTransactions(userId, lim, finalOffSet){
+    //         const ownTrans = await getOwnTransactions(userId, lim, finalOffSet)
+    //         const result = ownTrans[0]
+    
+    //         const transactionCount = await getAllTransCount(userId)
+    //         const total_transaction = transactionCount[0][0].total_trans
+    //         console.log('total_transaction:', total_transaction)
+    
+    //         if (!result){
+    //             const err = new Error(`Could not retrive transaction record for users`);
+    //             err.status = 400;
+    //             throw err;
+    //         }
+    //         else {
+    //                 return {total_transaction, result}
+                    
+    //         } 
+            
+    //     }
+
+
+
 
     
 }
+
+
+
+
 // Reminder Email For Sent Items -CRON JOB
 
  let task = cron.schedule('* 12 * * *', async () => {

@@ -45,7 +45,7 @@ export const getItemsWithPerson = async (userId) => {
 }
 
 export const findAllItem = async (limit, offset) => {
-   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.date_in_loc DESC LIMIT ? OFFSET ?', [limit, offset])
+   return await pool.query('select * from items INNER JOIN quantity_location ON items.item_id = quantity_location.item_id ORDER BY quantity_location.id DESC LIMIT ? OFFSET ?', [limit, offset])
 }
 
 export const getAllItemsCount = async () => {

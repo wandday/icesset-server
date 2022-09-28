@@ -96,7 +96,7 @@ console.log(date_in_loc)
         })
     } else{
     newLotDetails.forEach(el => {
-      pool.query('UPDATE quantity_location SET store_id=?, store_name=?, user_id=?, user_name=?, item_status=?, date_in_loc=? WHERE qyt_loc_id=?', [el.store_id, el.store_name, el.user_id, el.user_name, 'In Store', date_in_loc, el.qyt_loc_id ])
+      pool.query('UPDATE quantity_location SET store_id=?, store_name=?, user_id=?, user_name=?, item_status=?, date_in_loc=? WHERE qyt_loc_id=?', [el.store_id, el.store_name, el.user_id, el.user_name, 'In store', date_in_loc, el.qyt_loc_id ])
      })
    }
 

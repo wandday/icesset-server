@@ -82,6 +82,9 @@ let date_in_loc = new Date();
 console.log(date_in_loc)
 
  export const collectTransfer = async (collect) => {
+   try{
+
+
     const { batchInfo:{ receivedBy,  storedIn, transaction_id}, newLotDetails } = collect
 
     let getTransactionType = await pool.query('select * from transactions where transaction_id=?', [transaction_id])
@@ -101,6 +104,10 @@ console.log(date_in_loc)
    }
 
      return collect;
+
+   } catch(error){
+      console.log(error)
+   }
  }
 
 

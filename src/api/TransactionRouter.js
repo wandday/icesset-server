@@ -100,6 +100,7 @@ router.post(
     async (req, res, next) => {
       try {
         const result = await transactionController.collectTransfer(req.body);
+        console.log(req.body)
         res
           .status(200)
           .json(result);

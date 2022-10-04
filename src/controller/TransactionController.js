@@ -364,4 +364,4 @@ export default class TransactionController {
             }
         }
 
-  });
+  }); task.stop();

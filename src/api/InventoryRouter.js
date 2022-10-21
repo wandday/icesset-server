@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validate } from "express-validation";
-import { validInventory, validInventorylocation } from "../validation";
+import { validInventory, validInventorylocation, validCategory } from "../validation";
 import { validlocation } from "../validation";
 import InventoryController from "../controller/InventoryController";
 import { hasRole, isUser } from "../middlewares/index";
@@ -181,6 +181,39 @@ router.post(
       res
         .status(200)
         .json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.post(
+  "/inventory-category",
+  
+  validate(validCategory),
+  hasRole(admin),
+  async (req, res, next) => {
+    try {
+      const result = await inventoryController.createCategory(req.body);
+      res
+        .status(200)
+        .json(result);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+
+router.get(
+  "/inventory-category",
+  isUser(active),
+  async (req, res, next) => {
+    try {
+      const result = await inventoryController.getAllCategories();
+      res
+        .status(200)
+        .json({ message: "Categories retrieved successfully", result });
     } catch (e) {
       next(e);
     }

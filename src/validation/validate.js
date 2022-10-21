@@ -66,7 +66,7 @@ export const validInventorylocation = {
 
 export const validlocation = {
   body: Joi.object({
-  store_name: Joi.string().min(3).required(),
+  store_name: Joi.string().min(2).required(),
   
   }),
 };
@@ -88,6 +88,13 @@ export const validChangePassword = {
   currentPassword: Joi.string().required(),
   newPassword: Joi.string().min(6).required(),
 
+  }),
+};
+
+
+export const validCategory = {
+  body: Joi.object({
+  category_name: Joi.string().min(2).required(),
   }),
 };
 

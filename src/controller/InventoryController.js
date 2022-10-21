@@ -1,4 +1,4 @@
-import { findItemById, allLocationsCount, findAllItem, getAllItemsCount, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation} from '../models/inventory'
+import { findItemById, allLocationsCount, findAllItem, getAllItemsCount, createInventory, findStoreByName, createLocation, findAllLocations, findLocationById, getItemsInLocation, findItem, getItemsWithPerson, createInventoryLocation, findCategoryByName, createCategory, findAllCategories} from '../models/inventory'
 
 
 export default class InventoryController {
@@ -196,6 +196,41 @@ export default class InventoryController {
         }
         else return result[0]
     }
+
+    async createCategory(category){
+        const result =  await findCategoryByName(category.category_name)
+        if (result[0].length > 0){
+         const err = new Error(` ${category.category_name} already exist.`);
+         err.status = 400;
+         throw err;
+        } else {
+         const result = await createCategory(category)
+         if(result) {
+             return {
+                 message: "Category created successfully."
+             }
+         }else {
+             const err = new Error("Unable to add category.");
+             err.status = 400;
+             throw err;
+         }
+        }  
+    }
+
+
+    async getAllCategories(){
+        const categoryResult = await findAllCategories()
+        const result = categoryResult[0]
+        if (!result){
+            const err = new Error(`Could not retrive categories`);
+            err.status = 400;
+            throw err;
+        }
+        else {
+            return result
+        }
+    }
+
 
 
 }

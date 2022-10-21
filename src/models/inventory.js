@@ -92,3 +92,19 @@ export const createInventoryLocation = async (item) => {
    const {item_id, store_id, store_name, quantity, unit, user_id, user_name, supplier_name, supplier_phone, supplier_email, item_condition} = item
    return await pool.query('INSERT into quantity_location SET qyt_loc_id=?, item_id=?, store_id=?, store_name=?, quantity=?, unit=?, user_id=?, user_name=?, item_status=?, availability=?, supplier_name=?,  supplier_phone=?, supplier_email=?, item_condition=?', [qyt_loc_id, item_id, store_id, store_name, quantity, unit, user_id, user_name, 'In store', 'available', supplier_name, supplier_phone, supplier_email, item_condition ])
 }
+
+export const findCategoryByName = async (categoryName) => {
+   return await pool.query('select * from itemCategory where category_name=?', [categoryName])
+}
+
+export const createCategory = async (category) => {
+   const {category_name} = category
+   let categoryId = uuid4()
+   return await pool.query('INSERT into itemCategory SET category_id=?, category_name=?', [categoryId, category_name])
+}
+
+
+export const findAllCategories = async () => {
+   return await pool.query('select * from itemCategory ORDER BY id DESC')
+}
+
